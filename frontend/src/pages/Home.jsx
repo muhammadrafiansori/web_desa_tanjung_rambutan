@@ -7,6 +7,7 @@ const Home = () => {
     const [desaStats, setDesaStats] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [orgMembers, setOrgMembers] = useState([]); // New state for organizational members
 
     useEffect(() => {
         loadHomeData();
@@ -18,10 +19,11 @@ const Home = () => {
         
         try {
             // Load data parallel untuk performance yang lebih baik
-            const [postsData, pengumumanData, statsData] = await Promise.allSettled([
+            const [postsData, pengumumanData, statsData, orgData] = await Promise.allSettled([
                 api.getPosts(1, 3), // Get latest 3 posts
                 api.getPengumuman(3), // Get latest 3 announcements
-                api.getDesaStats()
+                api.getDesaStats(),
+                api.getOrgMembers() // Fetch organizational members data
             ]);
 
             // Handle posts data
@@ -94,6 +96,17 @@ const Home = () => {
                 });
             }
 
+            // Handle organizational members data
+            if (orgData.status === 'fulfilled') {
+                setOrgMembers(orgData.value);
+            } else {
+                // Fallback data jika API gagal
+                setOrgMembers([
+                    { id: 1, name: "John Doe", position: "Kepala Desa", photo: "/images/john_doe.jpg" },
+                    { id: 2, name: "Jane Smith", position: "Sekretaris Desa", photo: "/images/jane_smith.jpg" }
+                ]);
+            }
+
         } catch (error) {
             console.error('Error loading home data:', error);
             setError('Gagal memuat data. Menggunakan data lokal.');
@@ -124,6 +137,11 @@ const Home = () => {
                 jumlah_rt: 12,
                 jumlah_rw: 4
             });
+
+            setOrgMembers([
+                { id: 1, name: "John Doe", position: "Kepala Desa", photo: "/images/john_doe.jpg" },
+                { id: 2, name: "Jane Smith", position: "Sekretaris Desa", photo: "/images/jane_smith.jpg" }
+            ]);
         } finally {
             setLoading(false);
         }
@@ -210,6 +228,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
 
             {/* Content Sections */}
             <div className="max-w-6xl mx-auto px-5 py-16">

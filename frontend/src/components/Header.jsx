@@ -63,6 +63,7 @@ const Header = () => {
                                     <li><Link to="/profil/sejarah" className="block px-4 py-3 text-village-primary hover:bg-green-50 text-sm font-medium">Sejarah</Link></li>
                                     <li><Link to="/profil/visi-misi" className="block px-4 py-3 text-village-primary hover:bg-green-50 text-sm font-medium">Visi & Misi</Link></li>
                                     <li><Link to="/profil/geografis" className="block px-4 py-3 text-village-primary hover:bg-green-50 rounded-b-lg text-sm font-medium">Geografis</Link></li>
+                                    <li><Link to="/data-populasi" className="block px-4 py-3 text-village-primary hover:bg-green-50 text-sm font-medium">Data Populasi</Link></li>
                                 </ul>
                             </li>
                             <li className="relative group">
@@ -74,7 +75,7 @@ const Header = () => {
                                 </button>
                                 <ul className="absolute top-full left-0 mt-2 bg-white shadow-xl rounded-lg min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 border border-gray-100">
                                     <li><Link to="/pemerintahan/struktur" className="block px-4 py-3 text-village-primary hover:bg-green-50 rounded-t-lg text-sm font-medium">Struktur Organisasi</Link></li>
-                                    <li><Link to="/pemerintahan/aparatur" className="block px-4 py-3 text-village-primary hover:bg-green-50 rounded-b-lg text-sm font-medium">Aparatur Desa</Link></li>
+                                    <li><Link to="/pemerintahan/aparatur" className="block px-4 py-3 text-village-primary hover:bg-green-50 text-sm font-medium">Aparatur Desa</Link></li>
                                 </ul>
                             </li>
                             <li><Link to="/berita" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Berita</Link></li>
@@ -103,12 +104,14 @@ const Header = () => {
                         <ul className="p-2 space-y-1">
                             <li><Link to="/" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Beranda</Link></li>
                             <li><Link to="/about" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Profil Desa</Link></li>
-                            <li><Link to="/pemerintahan" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Pemerintahan</Link></li>
+                            <li><Link to="/pemerintahan/struktur" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Struktur Organisasi</Link></li>
+                            <li><Link to="/pemerintahan/aparatur" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Aparatur Desa</Link></li>
                             <li><Link to="/berita" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Berita</Link></li>
                             <li><Link to="/pengumuman" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Pengumuman</Link></li>
                             <li><Link to="/layanan" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Layanan</Link></li>
                             <li><Link to="/galeri" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Galeri</Link></li>
                             <li><Link to="/kontak" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Kontak</Link></li>
+                            <li><Link to="/data-populasi" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Data Populasi</Link></li>
                         </ul>
                     </nav>
                 </div>

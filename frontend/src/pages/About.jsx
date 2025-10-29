@@ -1,193 +1,213 @@
 import React from 'react';
 
 const About = () => {
+    const populationStats = {
+        total: 2483,
+        households: 696,
+        male: 1251,
+        female: 1232
+    };
+
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Hero Section */}
-            <div className="bg-gradient-to-r from-village-primary to-village-secondary text-white py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50">
+            {/* Hero Section with Pattern */}
+            <div className="relative bg-gradient-to-r from-desa-green-600 to-desa-green-800 text-white py-24">
+                <div className="absolute inset-0 bg-black opacity-20"></div>
+                <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-10"></div>
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
                     <div className="text-center">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
                             Tentang Desa Tanjung Rambutan
                         </h1>
-                        <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
+                        <p className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto leading-relaxed">
                             Mengenal lebih dekat sejarah, visi misi, dan profil lengkap Desa Tanjung Rambutan
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    {/* Sejarah Desa */}
-                    <div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                {/* Sejarah Section with Card Design */}
+                <div className="bg-white rounded-2xl shadow-xl p-8 mb-16 transform hover:scale-[1.02] transition-transform duration-300">
+                    <div className="flex items-center mb-8">
+                        <span className="w-12 h-12 bg-desa-green-100 rounded-full flex items-center justify-center mr-4">
+                            📚
+                        </span>
+                        <h2 className="text-3xl font-bold text-desa-green-600">
                             Sejarah Desa
                         </h2>
-                        <div className="space-y-4 text-gray-700">
-                            <p>
-                                Desa Tanjung Rambutan memiliki sejarah panjang yang dimulai dari era kolonial.
-                                Nama "Tanjung Rambutan" berasal dari bahasa Melayu yang bermakna tanjung yang
-                                ditumbuhi pohon rambutan.
-                            </p>
-                            <p>
-                                Desa ini terkenal dengan keindahan alamnya dan masyarakat yang ramah.
-                                Sejak kemerdekaan Indonesia, Tanjung Rambutan terus berkembang menjadi
-                                salah satu desa percontohan di wilayah ini.
-                            </p>
-                            <p>
-                                Saat ini, desa kami memiliki berbagai fasilitas modern sambil tetap
-                                mempertahankan nilai-nilai tradisional dan kearifan lokal.
-                            </p>
-                        </div>
                     </div>
-
-                    {/* Gambar/Video Placeholder */}
-                    <div className="bg-gray-200 rounded-lg aspect-video flex items-center justify-center">
-                        <div className="text-center">
-                            <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center">
-                                <svg className="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                                </svg>
-                            </div>
-                            <p className="text-gray-500">Foto Sejarah Desa</p>
-                        </div>
+                    <div className="space-y-6 text-gray-600 leading-relaxed">
+                        <p>
+                            Desa Tanjung Rambutan merupakan salah satu desa yang terletak di Kecamatan Kampar. Desa ini berdiri pada tahun 2000 sebagai hasil pemekaran dari tiga desa, yaitu Desa Batu Belah, Desa Tanjung Rambutan, dan Desa Simpang Kubu.
+                        </p>
+                        <p>
+                            Dahulu daerah ini dikenal dengan nama "Tanjuang Rebutan". Pada masa itu, wilayah ini masih berupa daerah persinggahan yang ramai dilalui oleh masyarakat yang menggunakan jalur transportasi air, sebab sungai menjadi jalur utama perjalanan dan perdagangan.
+                        </p>
+                        <p>
+                            Ketika daerah ini mulai mengering dan dapat dihuni, banyak orang datang dan berebut untuk menempati serta menguasai wilayah tersebut, sehingga muncullah nama "Tanjuang Rebutan." Namun, seiring berjalannya waktu, pelafalan nama tersebut berubah menjadi "Tanjung Rambutan".
+                        </p>
                     </div>
                 </div>
 
-                {/* Visi Misi */}
-                <div className="mt-16">
-                    <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-                        Visi & Misi
+                {/* Photo Gallery Section */}
+                <div className="mb-16">
+                    <h2 className="text-3xl font-bold text-center text-desa-green-600 mb-8">
+                        Galeri Desa
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/* Visi */}
-                        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-                            <div className="flex items-center mb-6">
-                                <div className="w-12 h-12 bg-village-primary rounded-lg flex items-center justify-center">
-                                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {/* Photo Card 1 */}
+                        <div className="group relative overflow-hidden rounded-2xl shadow-lg h-64">
+                            <img
+                                src="/images/desa/desa1.jpg"
+                                alt="Pemandangan Desa"
+                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                onError={(e) => {
+                                    e.target.src = '/images/placeholder.jpg';
+                                }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="absolute bottom-0 left-0 right-0 p-4">
+                                    <h3 className="text-white font-semibold">Pemandangan Desa</h3>
+                                    <p className="text-gray-200 text-sm">Keindahan alam Desa Tanjung Rambutan</p>
                                 </div>
-                                <h3 className="text-2xl font-bold text-gray-900 ml-4">Visi</h3>
                             </div>
-                            <p className="text-gray-700 leading-relaxed">
-                                "Mewujudkan Desa Tanjung Rambutan yang maju, mandiri, sejahtera,
-                                berdasarkan nilai-nilai gotong royong dan kearifan lokal untuk
-                                kesejahteraan masyarakat yang berkelanjutan."
-                            </p>
                         </div>
 
-                        {/* Misi */}
-                        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-                            <div className="flex items-center mb-6">
-                                <div className="w-12 h-12 bg-village-secondary rounded-lg flex items-center justify-center">
-                                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                        {/* Photo Card 2 */}
+                        <div className="group relative overflow-hidden rounded-2xl shadow-lg h-64">
+                            <img
+                                src="/images/desa/desa2.jpg"
+                                alt="Balai Desa"
+                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                onError={(e) => {
+                                    e.target.src = '/images/placeholder.jpg';
+                                }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="absolute bottom-0 left-0 right-0 p-4">
+                                    <h3 className="text-white font-semibold">Balai Desa</h3>
+                                    <p className="text-gray-200 text-sm">Pusat pelayanan masyarakat</p>
                                 </div>
-                                <h3 className="text-2xl font-bold text-gray-900 ml-4">Misi</h3>
                             </div>
-                            <ul className="text-gray-700 space-y-3">
-                                <li className="flex items-start">
-                                    <span className="w-2 h-2 bg-village-secondary rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                                    Meningkatkan kualitas pelayanan publik yang efektif dan efisien
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="w-2 h-2 bg-village-secondary rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                                    Mengembangkan potensi ekonomi desa berbasis kearifan lokal
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="w-2 h-2 bg-village-secondary rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                                    Memperkuat tata kelola pemerintahan desa yang transparan
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="w-2 h-2 bg-village-secondary rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                                    Meningkatkan kesejahteraan masyarakat melalui program pemberdayaan
-                                </li>
-                            </ul>
+                        </div>
+
+                        {/* Photo Card 3 */}
+                        <div className="group relative overflow-hidden rounded-2xl shadow-lg h-64">
+                            <img
+                                src="/images/desa/desa3.jpg"
+                                alt="Kegiatan Masyarakat"
+                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                onError={(e) => {
+                                    e.target.src = '/images/placeholder.jpg';
+                                }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="absolute bottom-0 left-0 right-0 p-4">
+                                    <h3 className="text-white font-semibold">Kegiatan Masyarakat</h3>
+                                    <p className="text-gray-200 text-sm">Gotong royong pembangunan desa</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Data Demografis */}
-                <div className="mt-16">
-                    <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
+                {/* Visi & Misi with Glass Effect */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-green-100 hover:-translate-y-1 transition-all duration-300">
+                        <div className="flex items-center mb-6">
+                            <span className="w-12 h-12 bg-desa-green-100 rounded-full flex items-center justify-center mr-4">
+                                🎯
+                            </span>
+                            <h3 className="text-2xl font-bold text-desa-green-600">Visi</h3>
+                        </div>
+                        <p className="text-gray-600 leading-relaxed">
+                            Kebersamaan dalam membangun demi terciptanya Desa Tanjung Rambutan yang maju dan sejahtera.
+                        </p>
+                    </div>
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-green-100 hover:-translate-y-1 transition-all duration-300">
+                        <div className="flex items-center mb-6">
+                            <span className="w-12 h-12 bg-desa-green-100 rounded-full flex items-center justify-center mr-4">
+                                🚀
+                            </span>
+                            <h3 className="text-2xl font-bold text-desa-green-600">Misi</h3>
+                        </div>
+                        <ul className="space-y-4 text-gray-600">
+                            <li>1. Bersama masyarakat memperkuat kelembagaan Desa yang ada.</li>
+                            <li>2. Bersama masyarakat dan kelembagaan desa menyelenggarakan pemerintahan dan melaksanakan pembangunan yang partisipatif.</li>
+                            <li>3. Bersama masyarakat dan kelembagaan desa dalam mewujudkan Desa Tanjung Rambutan yang makmur, sejahtera dan mandiri.</li>
+                            <li>4. Bersama masyarakat dan kelembagaan desa memberdayakan masyarakat untuk meningkatkan kesejahteraan masyarakat.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Data Demografis with Modern Stats Cards */}
+                <div className="mb-16">
+                    <h2 className="text-3xl font-bold text-center text-desa-green-600 mb-12">
                         Data Demografis
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {[
-                            { label: 'Total Penduduk', value: '2.847', unit: 'jiwa', icon: '👥' },
-                            { label: 'Jumlah KK', value: '756', unit: 'kepala keluarga', icon: '🏠' },
-                            { label: 'Luas Wilayah', value: '12.5', unit: 'km²', icon: '🗺️' },
-                            { label: 'Jumlah RT/RW', value: '15/5', unit: 'RT/RW', icon: '🏘️' }
-                        ].map((stat, index) => (
-                            <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
-                                <div className="text-3xl mb-3">{stat.icon}</div>
-                                <div className="text-2xl font-bold text-gray-900 mb-1">
-                                    {stat.value}
-                                </div>
-                                <div className="text-sm text-gray-600">{stat.unit}</div>
-                                <div className="text-gray-800 font-medium mt-2">{stat.label}</div>
-                            </div>
-                        ))}
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-shadow duration-300">
+                            <div className="text-4xl font-bold text-desa-green-600 mb-2">{populationStats.total}</div>
+                            <div className="text-gray-500 font-medium">Total Penduduk</div>
+                        </div>
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-shadow duration-300">
+                            <div className="text-4xl font-bold text-desa-green-600 mb-2">{populationStats.households}</div>
+                            <div className="text-gray-500 font-medium">Kepala Keluarga</div>
+                        </div>
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-shadow duration-300">
+                            <div className="text-4xl font-bold text-desa-green-600 mb-2">{populationStats.male}</div>
+                            <div className="text-gray-500 font-medium">Laki-laki</div>
+                        </div>
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-shadow duration-300">
+                            <div className="text-4xl font-bold text-desa-green-600 mb-2">{populationStats.female}</div>
+                            <div className="text-gray-500 font-medium">Perempuan</div>
+                        </div>
                     </div>
                 </div>
 
-                {/* Struktur Pemerintahan */}
-                <div className="mt-16">
-                    <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-                        Struktur Pemerintahan Desa
+                {/* Batas Wilayah with Interactive Cards */}
+                <div className="bg-white rounded-2xl shadow-xl p-8">
+                    <h2 className="text-3xl font-bold text-center text-desa-green-600 mb-12">
+                        Batas Wilayah
                     </h2>
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-                        <div className="text-center mb-8">
-                            <div className="inline-block bg-village-primary text-white px-6 py-3 rounded-lg">
-                                <h3 className="font-bold text-lg">Kepala Desa</h3>
-                                <p className="text-sm opacity-90">Bapak H. Ahmad Suharto</p>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {[
-                                { jabatan: 'Sekretaris Desa', nama: 'Ibu Sri Wahyuni, S.Sos' },
-                                { jabatan: 'Kaur Keuangan', nama: 'Bapak Bambang Susilo' },
-                                { jabatan: 'Kaur Umum', nama: 'Ibu Siti Aminah' }
-                            ].map((staff, index) => (
-                                <div key={index} className="text-center p-4 bg-gray-50 rounded-lg">
-                                    <div className="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <svg className="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                                        </svg>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-6">
+                            {['Utara', 'Selatan'].map((direction, index) => (
+                                <div key={index} 
+                                    className="bg-gray-50 rounded-xl p-6 hover:bg-desa-green-50 transition-colors duration-300">
+                                    <div className="flex items-center space-x-4">
+                                        <span className="w-10 h-10 bg-desa-green-100 rounded-full flex items-center justify-center">
+                                            {direction === 'Utara' ? '⬆️' : '⬇️'}
+                                        </span>
+                                        <div>
+                                            <div className="font-medium text-gray-600">Sebelah {direction}</div>
+                                            <div className="text-desa-green-600">
+                                                {direction === 'Utara' ? 'Desa Muara Jalai' : 'Desa Siabu'}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h4 className="font-semibold text-gray-900">{staff.jabatan}</h4>
-                                    <p className="text-sm text-gray-600">{staff.nama}</p>
                                 </div>
                             ))}
                         </div>
-                    </div>
-                </div>
-
-                {/* Fasilitas Desa */}
-                <div className="mt-16">
-                    <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-                        Fasilitas Desa
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {[
-                            { name: 'Balai Desa', desc: 'Pusat kegiatan pemerintahan dan kemasyarakatan', icon: '🏛️' },
-                            { name: 'Puskesmas', desc: 'Fasilitas kesehatan masyarakat', icon: '🏥' },
-                            { name: 'Sekolah Dasar', desc: '3 unit SD negeri dan swasta', icon: '🏫' },
-                            { name: 'Masjid', desc: '5 masjid dan musholla', icon: '🕌' },
-                            { name: 'Pasar Desa', desc: 'Pusat perdagangan lokal', icon: '🏪' },
-                            { name: 'Lapangan Olahraga', desc: 'Fasilitas olahraga dan rekreasi', icon: '⚽' }
-                        ].map((facility, index) => (
-                            <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                <div className="text-4xl mb-4">{facility.icon}</div>
-                                <h3 className="font-bold text-gray-900 mb-2">{facility.name}</h3>
-                                <p className="text-gray-600 text-sm">{facility.desc}</p>
-                            </div>
-                        ))}
+                        <div className="space-y-6">
+                            {['Barat', 'Timur'].map((direction, index) => (
+                                <div key={index} 
+                                    className="bg-gray-50 rounded-xl p-6 hover:bg-desa-green-50 transition-colors duration-300">
+                                    <div className="flex items-center space-x-4">
+                                        <span className="w-10 h-10 bg-desa-green-100 rounded-full flex items-center justify-center">
+                                            {direction === 'Barat' ? '⬅️' : '➡️'}
+                                        </span>
+                                        <div>
+                                            <div className="font-medium text-gray-600">Sebelah {direction}</div>
+                                            <div className="text-desa-green-600">
+                                                {direction === 'Barat' ? 'Desa Batu Belah' : 'Desa Simpang Kubu'}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
