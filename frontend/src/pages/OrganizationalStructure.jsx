@@ -5,62 +5,62 @@ const OrganizationalStructure = () => {
         {
             name: "DEDI WAHYUDI, SE.MM",
             position: "Kepala Desa",
-            image: "/foto/images.jpg"
+            image: "/foto/DediWahyudi.jpg"
         },
         {
             name: "FITRI HIDAYATI, S.Pd",
             position: "Sekretaris Desa",
-            image: "/images/profile-default.png"
+            image: "/foto/FitriHidayati.jpg"
         },
         {
             name: "ISMAIL SALEH, S.Pd",
             position: "Kepala Urusan Keuangan",
-            image: "/images/profile-default.png"
+            image: "/foto/IsmailSaleh.jpg"
         },
         {
             name: "FEBBY SYIPELNI",
             position: "Kepala Urusan Tata Usaha dan Umum",
-            image: "/images/profile-default.png"
+            image: "/foto/FebbySyipelni.jpg"
         },
         {
             name: "AHMAD RAFI, S.Sos",
             position: "Kepala Urusan Perencanaan",
-            image: "/images/profile-default.png"
+            image: "/foto/AhmadRfi.jpg"
         },
         {
             name: "ILVIA AYUNITA, SP",
             position: "Kepala Seksi Pemerintahan",
-            image: "/images/profile-default.png"
+            image: "/foto/IlviaAyunita.jpg"
         },
         {
             name: "DARNIS SUSANTI, SE",
             position: "Kepala Seksi Kesejahteraan",
-            image: "/images/profile-default.png"
+            image: "/foto/DarnisSusanti.jpg"
         },
         {
             name: "NURUL DAYANA, S.Farm",
             position: "Kepala Seksi Pelayanan",
-            image: "/images/profile-default.png"
+            image: "/foto/NurulDayana.jpg"
         },
         {
             name: "IKWANUL KHAIDIR, S.Pd",
             position: "Kepala Dusun I",
-            image: "/images/profile-default.png"
+            image: "/foto/IkhwanulKhaidirKadus1.jpg"
         },
         {
             name: "SUARLI ANDRI PRANATA",
             position: "Kepala Dusun II",
-            image: "/images/profile-default.png"
+            image: "/foto/Suarli Andri kadus 2.jpg"
         },
         {
             name: "HADI PURNOMO, SE",
             position: "Kepala Dusun III",
-            image: "/images/profile-default.png"
+            image: "/foto/hadiPurnomoKadus3.jpg"
         },
         {
             name: "FARHAN FURQAN",
             position: "Kepala Dusun IV",
-            image: "/images/profile-default.png"
+            image: "/foto/FarhanFurqanKadus4.jpg"
         }
     ];
 
