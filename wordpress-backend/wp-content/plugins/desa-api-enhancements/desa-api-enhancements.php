@@ -19,7 +19,10 @@ class DesaAPIEnhancements
     {
         add_action('init', array($this, 'init'));
         add_action('rest_api_init', array($this, 'register_api_routes'));
-        add_action('rest_api_init', array($this, 'add_cors_support'));
+        
+        // Use proper WordPress filters for CORS
+        add_filter('rest_pre_serve_request', array($this, 'add_cors_headers'), 0, 4);
+        add_action('init', array($this, 'handle_cors_preflight'));
     }
 
     public function init()
@@ -176,23 +179,30 @@ class DesaAPIEnhancements
     }
 
     /**
-     * Add CORS support untuk headless WordPress
+     * Handle CORS preflight requests
      */
-    public function add_cors_support()
+    public function handle_cors_preflight()
     {
-        $enable_cors = defined('CORS_ALLOW_ORIGIN');
-        if (!$enable_cors) return;
-
-        $headers = 'Access-Control-Allow-Origin: ' . CORS_ALLOW_ORIGIN;
-        header($headers);
-        header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-        header('Access-Control-Allow-Credentials: true');
-        header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With');
-
-        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-            status_header(200);
+        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+            header('Access-Control-Allow-Origin: *');
+            header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
+            header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With');
+            header('Access-Control-Max-Age: 86400'); // Cache for 1 day
+            http_response_code(200);
             exit();
         }
+    }
+
+    /**
+     * Add CORS headers to REST API responses
+     */
+    public function add_cors_headers($served, $result, $request, $server)
+    {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
+        header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With');
+        
+        return $served;
     }
 }
 

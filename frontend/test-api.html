@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+</head>
+<body>
+    <h1>WordPress API Test</h1>
+    <button onclick="testAPI()">Test Posts API</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testAPI() {
+            const apiUrl = 'http://192.168.1.93/New/web_desa_tanjung_rambutan/wordpress-backend/?rest_route=/wp/v2/posts';
+            
+            try {
+                console.log('Testing API:', apiUrl);
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                console.log('API Response:', data);
+                
+                if (data && data.length > 0) {
+                    console.log('✅ Posts found:', data.length);
+                    console.log('First post:', data[0].title.rendered);
+                } else {
+                    console.log('❌ No posts found');
+                }
+            } catch (error) {
+                console.error('❌ API Error:', error);
+                document.getElementById('result').textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html></content>
+</invoke>

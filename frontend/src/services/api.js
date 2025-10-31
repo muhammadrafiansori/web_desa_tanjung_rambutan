@@ -3,7 +3,7 @@ import axios from 'axios';
 // Base URL untuk WordPress API
 // Untuk development, sesuaikan dengan URL WordPress lokal Anda
 // Untuk production, ganti dengan URL WordPress production
-const API_BASE_URL = import.meta.env.VITE_WP_API_URL || 'http://localhost:8000/wp-json';
+const API_BASE_URL = import.meta.env.VITE_WP_API_URL || 'http://localhost:8000';
 
 // Buat instance axios dengan konfigurasi default
 const apiClient = axios.create({
@@ -13,6 +13,11 @@ const apiClient = axios.create({
         'Content-Type': 'application/json',
     },
 });
+
+// Transform URL untuk menggunakan query parameter format
+const transformUrl = (endpoint) => {
+    return `?rest_route=${endpoint}`;
+};
 
 // Interceptor untuk handle response dan error
 apiClient.interceptors.response.use(
@@ -46,7 +51,7 @@ class WordPressAPI {
         }
 
         try {
-            const response = await apiClient.get('/wp/v2/posts', { params });
+            const response = await apiClient.get(transformUrl('/wp/v2/posts'), { params });
             return response;
         } catch (error) {
             throw this.handleError(error);
@@ -59,7 +64,9 @@ class WordPressAPI {
      */
     async getPost(identifier) {
         try {
-            const response = await apiClient.get(`/wp/v2/posts/${identifier}?_embed=true`);
+            const response = await apiClient.get(transformUrl(`/wp/v2/posts/${identifier}`), { 
+                params: { _embed: true }
+            });
             return response;
         } catch (error) {
             throw this.handleError(error);
@@ -73,7 +80,9 @@ class WordPressAPI {
      */
     async getPages() {
         try {
-            const response = await apiClient.get('/wp/v2/pages?_embed=true');
+            const response = await apiClient.get(transformUrl('/wp/v2/pages'), { 
+                params: { _embed: true }
+            });
             return response;
         } catch (error) {
             throw this.handleError(error);
@@ -101,7 +110,9 @@ class WordPressAPI {
      */
     async getPengumuman(limit = 5) {
         try {
-            const response = await apiClient.get(`/wp/v2/pengumuman?per_page=${limit}&_embed=true`);
+            const response = await apiClient.get(transformUrl('/wp/v2/pengumuman'), {
+                params: { per_page: limit, _embed: true }
+            });
             return response;
         } catch (error) {
             throw this.handleError(error);
@@ -176,7 +187,7 @@ class WordPressAPI {
      */
     async getDesaStats() {
         try {
-            const response = await apiClient.get('/desa/v1/stats');
+            const response = await apiClient.get(transformUrl('/desa/v1/stats'));
             return response;
         } catch (error) {
             // Fallback data jika API belum tersedia

@@ -18,14 +18,21 @@ const Home = () => {
         setError(null);
 
         try {
+            console.log('🔄 Loading home data...');
+            console.log('API_URL from env:', import.meta.env.VITE_WP_API_URL);
+            
             // Load data parallel untuk performance yang lebih baik
             const [postsData, pengumumanData, statsData, orgData] = await Promise.allSettled([
                 api.getPosts(1, 3), // Get latest 3 posts
                 api.getPengumuman(3), // Get latest 3 announcements
                 api.getDesaStats(),
                 api.getOrgMembers() // Fetch organizational members data
-            ]);            // Handle posts data
+            ]);            
+            
+            // Handle posts data
+            console.log('📰 Posts API result:', postsData);
             if (postsData.status === 'fulfilled') {
+                console.log('✅ Posts API success:', postsData.value.length, 'posts found');
                 const posts = postsData.value.map(post => ({
                     id: post.id,
                     title: post.title.rendered,
@@ -35,7 +42,9 @@ const Home = () => {
                     slug: post.slug
                 }));
                 setLatestNews(posts);
+                console.log('📋 Processed posts:', posts);
             } else {
+                console.log('❌ Posts API failed:', postsData.reason);
                 // Fallback data jika API gagal
                 setLatestNews([
                     {
