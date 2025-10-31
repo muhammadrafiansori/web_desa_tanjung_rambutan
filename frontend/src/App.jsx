@@ -4,6 +4,10 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import About from './pages/About'
+import OrganizationalStructure from './pages/OrganizationalStructure' // Import the new page
+import PopulationData from './pages/PopulationData' // Import PopulationData page
+import History from './pages/History'; // Import History page
+import Geography from './pages/Geography'; // Import Geography page
 
 function App() {
   return (
@@ -14,6 +18,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/pemerintahan/struktur" element={<OrganizationalStructure />} /> {/* Ensure this route is present */}
+            <Route path="/data-populasi" element={<PopulationData />} /> {/* Route for Population Data page */}
+            <Route path="/profil/sejarah" element={<History />} /> {/* Route for History page */}
+            <Route path="/profil/geografis" element={<Geography />} /> {/* Route for Geography page */}
             {/* Tambahkan route lain di sini nanti */}
           </Routes>
         </main>
