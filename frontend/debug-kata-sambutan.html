@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Debug Kata Sambutan API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .log {
+            background: #f0f0f0;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔍 Debug Kata Sambutan API Integration</h1>
+    <div id="logs"></div>
+
+    <script>
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.innerHTML = `<strong>[${new Date().toLocaleTimeString()}]</strong> ${message}`;
+            document.getElementById('logs').appendChild(div);
+            console.log(message);
+        }
+
+        // Simulate the same API setup as frontend
+        const API_BASE_URL = '/wp-api'; // Using proxy like frontend
+
+        function transformUrl(endpoint) {
+            return `?rest_route=${endpoint}`;
+        }
+
+        async function testDirectWordPress() {
+            log('🔄 Testing direct WordPress API...');
+            try {
+                const directUrl = 'http://192.168.1.93/New/web_desa_tanjung_rambutan/wordpress-backend/?rest_route=/wp/v2/kata_sambutan&per_page=1&status=publish';
+                log(`📡 Direct URL: ${directUrl}`);
+
+                const response = await fetch(directUrl);
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    log('✅ Direct WordPress API works!', 'success');
+                    log(`📝 Data preview: ID=${data[0].id}, Title="${data[0].title.rendered}"`, 'success');
+
+                    if (data[0].kata_sambutan_meta) {
+                        log('✅ Meta fields available!', 'success');
+                        log(`👤 Nama: ${data[0].kata_sambutan_meta.nama_kepala_desa}`, 'success');
+                        log(`💼 Jabatan: ${data[0].kata_sambutan_meta.jabatan}`, 'success');
+                        log(`📷 Foto: ${data[0].kata_sambutan_meta.foto_kepala_desa ? 'Available' : 'Not available'}`, 'success');
+                    } else {
+                        log('⚠️ Meta fields not found in response', 'error');
+                    }
+                } else {
+                    log('❌ No data returned from WordPress', 'error');
+                }
+            } catch (error) {
+                log(`❌ Direct WordPress API failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testProxyAPI() {
+            log('🔄 Testing frontend proxy API...');
+            try {
+                const proxyUrl = `${API_BASE_URL}${transformUrl('/wp/v2/kata_sambutan')}&per_page=1&status=publish&_embed=true`;
+                log(`📡 Proxy URL: ${proxyUrl}`);
+
+                const response = await fetch(proxyUrl);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    log('✅ Frontend proxy API works!', 'success');
+                    log(`📝 Data preview: ID=${data[0].id}, Title="${data[0].title.rendered}"`, 'success');
+
+                    if (data[0].kata_sambutan_meta) {
+                        log('✅ Meta fields available through proxy!', 'success');
+                        log(`👤 Nama: ${data[0].kata_sambutan_meta.nama_kepala_desa}`, 'success');
+                        log(`💼 Jabatan: ${data[0].kata_sambutan_meta.jabatan}`, 'success');
+                        log(`📷 Foto URL: ${data[0].kata_sambutan_meta.foto_kepala_desa?.url || 'Not available'}`, 'success');
+                    } else {
+                        log('⚠️ Meta fields not found in proxy response', 'error');
+                    }
+
+                    // Test frontend processing
+                    const processed = {
+                        id: data[0].id,
+                        title: data[0].title?.rendered || '',
+                        content: data[0].content?.rendered || '',
+                        date: data[0].date,
+                        nama_kepala_desa: data[0].kata_sambutan_meta?.nama_kepala_desa || '',
+                        jabatan: data[0].kata_sambutan_meta?.jabatan || 'Kepala Desa',
+                        foto_kepala_desa: data[0].kata_sambutan_meta?.foto_kepala_desa || null
+                    };
+
+                    log('✅ Frontend processing simulation successful!', 'success');
+                    log(`📋 Processed data: ${JSON.stringify(processed, null, 2)}`, 'success');
+
+                } else {
+                    log('❌ No data returned from proxy', 'error');
+                }
+            } catch (error) {
+                log(`❌ Frontend proxy API failed: ${error.message}`, 'error');
+                log('💡 This might indicate proxy configuration issues or dev server not running', 'error');
+            }
+        }
+
+        // Run tests
+        window.onload = async () => {
+            log('🚀 Starting API tests...');
+
+            await testDirectWordPress();
+
+            // Wait a bit before testing proxy
+            setTimeout(async () => {
+                await testProxyAPI();
+                log('🏁 All tests completed!');
+            }, 1000);
+        };
+    </script>
+</body>
+
+</html>

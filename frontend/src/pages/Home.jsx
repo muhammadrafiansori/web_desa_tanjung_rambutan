@@ -7,6 +7,7 @@ const Home = () => {
     const [latestNews, setLatestNews] = useState([]);
     const [announcements, setAnnouncements] = useState([]);
     const [desaStats, setDesaStats] = useState({});
+    const [kataSambutan, setKataSambutan] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -23,10 +24,11 @@ const Home = () => {
             console.log('API_URL from env:', import.meta.env.VITE_WP_API_URL);
 
             // Load data parallel untuk performance yang lebih baik
-            const [postsData, pengumumanData, statsData] = await Promise.allSettled([
+            const [postsData, pengumumanData, statsData, kataSambutanData] = await Promise.allSettled([
                 api.getPosts(1, 3), // Get latest 3 posts
                 api.getPengumuman(3), // Get latest 3 announcements
-                api.getDesaStats()
+                api.getDesaStats(),
+                api.getKataSambutan() // Get kata sambutan kepala desa
             ]);
 
             // Handle posts data
@@ -114,6 +116,35 @@ const Home = () => {
                 });
             }
 
+            // Handle kata sambutan data
+            console.log('💬 Kata Sambutan API result:', kataSambutanData);
+            if (kataSambutanData.status === 'fulfilled' && kataSambutanData.value?.success && kataSambutanData.value.data) {
+                console.log('✅ Kata Sambutan API success:', kataSambutanData.value.data);
+                const sambutan = kataSambutanData.value.data;
+                setKataSambutan({
+                    id: sambutan.id,
+                    content: sambutan.content,
+                    kepala_desa: sambutan.nama_kepala_desa || 'Kepala Desa Tanjung Rambutan',
+                    jabatan: sambutan.jabatan || 'Kepala Desa',
+                    foto_kepala_desa: sambutan.foto_kepala_desa?.url || sambutan.foto_kepala_desa?.large || null,
+                    date: sambutan.date
+                });
+            } else {
+                console.log('❌ Kata Sambutan API failed:', kataSambutanData.reason);
+                // Fallback kata sambutan
+                setKataSambutan({
+                    id: 1,
+                    content: `<p>Assalamualaikum warahmatullahi wabarakatuh,</p>
+                             <p>Selamat datang di website resmi Desa Tanjung Rambutan. Kami berkomitmen untuk memberikan pelayanan terbaik kepada masyarakat dan membangun desa yang maju, mandiri, dan sejahtera.</p>
+                             <p>Melalui website ini, kami berharap dapat meningkatkan transparansi dan komunikasi dengan seluruh masyarakat desa. Mari bersama-sama membangun Tanjung Rambutan yang lebih baik.</p>
+                             <p>Wassalamualaikum warahmatullahi wabarakatuh.</p>`,
+                    kepala_desa: 'H. Ahmad Rahman',
+                    jabatan: 'Kepala Desa Tanjung Rambutan',
+                    foto_kepala_desa: null,
+                    date: new Date().toISOString()
+                });
+            }
+
         } catch (error) {
             console.error('Error loading home data:', error);
             setError('Gagal memuat data. Menggunakan data lokal.');
@@ -143,6 +174,19 @@ const Home = () => {
                 luas_wilayah: 15.8,
                 jumlah_rt: 12,
                 jumlah_rw: 4
+            });
+
+            // Fallback kata sambutan
+            setKataSambutan({
+                id: 1,
+                content: `<p>Assalamualaikum warahmatullahi wabarakatuh,</p>
+                         <p>Selamat datang di website resmi Desa Tanjung Rambutan. Kami berkomitmen untuk memberikan pelayanan terbaik kepada masyarakat dan membangun desa yang maju, mandiri, dan sejahtera.</p>
+                         <p>Melalui website ini, kami berharap dapat meningkatkan transparansi dan komunikasi dengan seluruh masyarakat desa. Mari bersama-sama membangun Tanjung Rambutan yang lebih baik.</p>
+                         <p>Wassalamualaikum warahmatullahi wabarakatuh.</p>`,
+                kepala_desa: 'H. Ahmad Rahman',
+                jabatan: 'Kepala Desa Tanjung Rambutan',
+                foto_kepala_desa: null,
+                date: new Date().toISOString()
             });
         } finally {
             setLoading(false);
@@ -206,88 +250,7 @@ const Home = () => {
             </section>
 
             {/* Kata Sambutan Kepala Desa */}
-            <section className="bg-gradient-to-b from-desa-green-50 to-white py-20 -mt-20 relative z-20">
-                <div className="max-w-6xl mx-auto px-5">
-                    <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 hover:shadow-3xl transition-shadow duration-500">
-                        <div className="grid lg:grid-cols-2 items-center">
-                            {/* Foto Kepala Desa */}
-                            <div className="p-8 lg:p-12 flex justify-center">
-                                <div className="relative">
-                                    <div className="w-72 h-72 rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-desa-green-100 to-desa-green-200 flex items-center justify-center">
-                                        <img
-                                            src="/images/kepala-desa.jpg"
-                                            alt="Bapak [Nama Kepala Desa]"
-                                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                                            onError={(e) => {
-                                                e.target.style.display = 'none';
-                                                e.target.nextSibling.style.display = 'flex';
-                                            }}
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-br from-desa-green-100 to-desa-green-200 items-center justify-center text-6xl hidden">
-                                            👨‍💼
-                                        </div>
-                                    </div>
-                                    {/* Decorative elements */}
-                                    <div className="absolute -top-4 -right-4 w-24 h-24 bg-desa-green-200 rounded-full opacity-50 animate-pulse"></div>
-                                    <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-village-primary-300 rounded-full opacity-40 animate-bounce"></div>
-                                </div>
-                            </div>
 
-                            {/* Kata Sambutan */}
-                            <div className="p-8 lg:p-12 lg:pl-8">
-                                <div className="mb-6">
-                                    <h3 className="text-2xl md:text-3xl font-bold text-desa-green-600 mb-2">
-                                        Kata Sambutan
-                                    </h3>
-                                    <div className="w-20 h-1 bg-gradient-to-r from-desa-green-500 to-village-primary-500 rounded-full mb-6"></div>
-                                </div>
-
-                                <div className="space-y-4 text-gray-700 leading-relaxed">
-                                    <p className="text-lg font-medium text-desa-green-700 italic">
-                                        "Assalamu'alaikum Warahmatullahi Wabarakatuh"
-                                    </p>
-
-                                    <p>
-                                        Selamat datang di website resmi Desa Tanjung Rambutan. Dengan bangga kami mempersembahkan
-                                        portal digital ini sebagai jembatan komunikasi antara pemerintah desa dengan seluruh
-                                        masyarakat, baik yang berada di dalam maupun di luar wilayah desa.
-                                    </p>
-
-                                    <p>
-                                        Melalui website ini, kami berkomitmen untuk menyajikan informasi terkini mengenai
-                                        program-program pembangunan, layanan publik, dan berbagai kegiatan yang ada di desa kita.
-                                        Transparansi dan akuntabilitas menjadi kunci dalam setiap langkah pembangunan yang kami lakukan.
-                                    </p>
-
-                                    <p>
-                                        Mari bersama-sama kita wujudkan Desa Tanjung Rambutan yang maju, mandiri, dan sejahtera
-                                        untuk kesejahteraan seluruh masyarakat.
-                                    </p>
-
-                                    <p className="text-desa-green-700 font-medium italic">
-                                        "Wassalamu'alaikum Warahmatullahi Wabarakatuh"
-                                    </p>
-                                </div>
-
-                                {/* Signature */}
-                                <div className="mt-8 pt-6 border-t border-gray-200">
-                                    <div className="text-right">
-                                        <p className="font-bold text-desa-green-600 text-lg">
-                                            [Nama Kepala Desa]
-                                        </p>
-                                        <p className="text-gray-600 font-medium">
-                                            Kepala Desa Tanjung Rambutan
-                                        </p>
-                                        <p className="text-sm text-gray-500 mt-1">
-                                            Periode 2019 - 2025
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* Stats Section */}
             <section className="bg-white py-20 mt-16 relative z-20">
@@ -320,6 +283,110 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Kata Sambutan Kepala Desa Section */}
+            {kataSambutan && (
+                <section className="bg-gradient-to-br from-desa-green-50 to-white py-16 sm:py-20 relative overflow-hidden">
+                    {/* Background Pattern */}
+                    <div className="absolute inset-0 opacity-5">
+                        <div className="absolute top-10 left-10 w-32 h-32 bg-desa-green-300 rounded-full blur-3xl"></div>
+                        <div className="absolute bottom-10 right-10 w-40 h-40 bg-desa-green-400 rounded-full blur-3xl"></div>
+                    </div>
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        <div className="text-center mb-12 sm:mb-16">
+                            <div className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm text-desa-green-700 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm font-semibold mb-4 sm:mb-6 shadow-lg border border-desa-green-200">
+                                <span className="text-base sm:text-lg">💬</span>
+                                <span>Kata Sambutan</span>
+                            </div>
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 tracking-tight">
+                                Sambutan
+                                <span className="block text-desa-green-600 mt-2">Kepala Desa</span>
+                            </h2>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                            {/* Foto Kepala Desa */}
+                            <div className="lg:col-span-4 flex justify-center">
+                                <div className="relative group">
+                                    <div className="absolute -inset-4 bg-gradient-to-r from-desa-green-600 to-desa-green-700 rounded-3xl blur-lg opacity-25 group-hover:opacity-40 transition duration-500"></div>
+                                    <div className="relative bg-white p-6 rounded-3xl shadow-2xl">
+                                        <div className="aspect-[4/5] w-64 sm:w-80 overflow-hidden rounded-2xl">
+                                            {kataSambutan.foto_kepala_desa ? (
+                                                <img
+                                                    src={kataSambutan.foto_kepala_desa}
+                                                    alt={kataSambutan.kepala_desa}
+                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-gradient-to-br from-desa-green-100 to-desa-green-200 flex items-center justify-center">
+                                                    <div className="text-center text-desa-green-600">
+                                                        <svg className="w-24 h-24 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                                                        </svg>
+                                                        <p className="text-sm font-medium">Foto Kepala Desa</p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Info Kepala Desa */}
+                                        <div className="text-center mt-6">
+                                            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+                                                {kataSambutan.kepala_desa}
+                                            </h3>
+                                            <p className="text-desa-green-600 font-semibold text-sm sm:text-base">
+                                                {kataSambutan.jabatan}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Kata Sambutan Content */}
+                            <div className="lg:col-span-8">
+                                <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/50 p-6 sm:p-8 lg:p-12">
+                                    <div className="mb-6">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="w-8 h-8 bg-desa-green-600 rounded-full flex items-center justify-center">
+                                                <span className="text-white text-lg">"</span>
+                                            </div>
+                                            <div className="h-px flex-1 bg-gradient-to-r from-desa-green-200 to-transparent"></div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className="prose prose-lg max-w-none text-gray-700 leading-relaxed
+                                                 prose-p:mb-4 prose-p:text-gray-700 prose-p:text-base sm:prose-p:text-lg
+                                                 prose-strong:text-gray-900 prose-strong:font-semibold
+                                                 [&>p:first-child]:text-xl [&>p:first-child]:font-medium [&>p:first-child]:text-desa-green-700
+                                                 [&>p:last-child]:font-medium [&>p:last-child]:text-desa-green-600"
+                                        dangerouslySetInnerHTML={{ __html: kataSambutan.content }}
+                                    />
+
+                                    <div className="mt-8 pt-6 border-t border-gray-200">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-3 text-sm text-gray-500">
+                                                <span className="w-2 h-2 bg-desa-green-500 rounded-full"></span>
+                                                <span>Diperbarui {new Date(kataSambutan.date).toLocaleDateString('id-ID', {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric'
+                                                })}</span>
+                                            </div>
+
+                                            <div className="flex items-center gap-2 text-desa-green-600">
+                                                <span className="text-sm font-medium">Hormat kami</span>
+                                                <div className="w-6 h-px bg-desa-green-400"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* Village Overview Section */}
             <section className="bg-gradient-to-br from-gray-50 to-white py-20">

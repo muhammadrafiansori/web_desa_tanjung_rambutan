@@ -149,7 +149,7 @@ class WordPressAPI {
      */
     async getLayanan() {
         try {
-            const response = await apiClient.get(buildApiUrl('/wp/v2/layanan'), { 
+            const response = await apiClient.get(transformUrl('/wp/v2/layanan'), {
                 params: { _embed: true }
             });
             return response;
@@ -160,14 +160,57 @@ class WordPressAPI {
 
     /**
      * Get kata sambutan (welcome messages)
+     * Menggunakan custom post type kata_sambutan dari plugin WordPress
      */
     async getKataSambutan() {
         try {
-            const response = await apiClient.get(buildApiUrl('/wp/v2/kata_sambutan'), { 
-                params: { _embed: true }
+            console.log('🔄 Fetching kata sambutan...');
+            console.log('API Base URL:', API_BASE_URL);
+            console.log('Transform URL result:', transformUrl('/wp/v2/kata_sambutan'));
+
+            const response = await apiClient.get(transformUrl('/wp/v2/kata_sambutan'), {
+                params: {
+                    per_page: 1,
+                    status: 'publish',
+                    _embed: true
+                }
             });
-            return response;
+
+            console.log('✅ Raw kata sambutan response:', response);
+
+            // Response sudah diproses oleh interceptor, jadi langsung array
+            if (response && response.length > 0) {
+                const data = response[0];
+                console.log('📝 Processing kata sambutan data:', data);
+
+                const result = {
+                    success: true,
+                    data: {
+                        id: data.id,
+                        title: data.title?.rendered || '',
+                        content: data.content?.rendered || '',
+                        date: data.date,
+                        // Meta fields dari plugin desa-api-enhancements
+                        nama_kepala_desa: data.kata_sambutan_meta?.nama_kepala_desa || '',
+                        jabatan: data.kata_sambutan_meta?.jabatan || 'Kepala Desa',
+                        foto_kepala_desa: data.kata_sambutan_meta?.foto_kepala_desa || null
+                    }
+                };
+
+                console.log('✅ Processed kata sambutan:', result);
+                return result;
+            }
+
+            console.log('❌ No kata sambutan data found');
+            return { success: false, data: null };
         } catch (error) {
+            console.error('❌ Error fetching kata sambutan:', error);
+            console.error('Error details:', {
+                message: error.message,
+                status: error.response?.status,
+                statusText: error.response?.statusText,
+                url: error.config?.url
+            });
             throw this.handleError(error);
         }
     }

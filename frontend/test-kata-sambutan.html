@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test WordPress API</title>
+</head>
+
+<body>
+    <h1>Test WordPress API Integration</h1>
+    <div id="result"></div>
+
+    <script>
+        // Test API WordPress
+        const API_BASE_URL = 'http://192.168.1.93/New/web_desa_tanjung_rambutan/wordpress-backend';
+
+        function transformUrl(endpoint) {
+            return `?rest_route=${endpoint}`;
+        }
+
+        async function testKataSambutan() {
+            try {
+                const url = `${API_BASE_URL}${transformUrl('/wp/v2/kata_sambutan')}&per_page=1&status=publish`;
+                console.log('Testing URL:', url);
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                console.log('API Response:', data);
+
+                if (data && data.length > 0) {
+                    const sambutan = data[0];
+                    const result = {
+                        id: sambutan.id,
+                        title: sambutan.title?.rendered || '',
+                        content: sambutan.content?.rendered || '',
+                        date: sambutan.date,
+                        nama_kepala_desa: sambutan.kata_sambutan_meta?.nama_kepala_desa || '',
+                        jabatan: sambutan.kata_sambutan_meta?.jabatan || '',
+                        foto_kepala_desa: sambutan.kata_sambutan_meta?.foto_kepala_desa?.url || null
+                    };
+
+                    document.getElementById('result').innerHTML = `
+                        <h2>✅ API Test Berhasil!</h2>
+                        <h3>Data Kata Sambutan:</h3>
+                        <p><strong>ID:</strong> ${result.id}</p>
+                        <p><strong>Nama Kepala Desa:</strong> ${result.nama_kepala_desa}</p>
+                        <p><strong>Jabatan:</strong> ${result.jabatan}</p>
+                        <p><strong>Foto:</strong> ${result.foto_kepala_desa ? '✅ Tersedia' : '❌ Tidak ada'}</p>
+                        <div><strong>Isi Sambutan:</strong><br>${result.content}</div>
+                        ${result.foto_kepala_desa ? `<br><img src="${result.foto_kepala_desa}" style="max-width: 200px; border-radius: 8px;">` : ''}
+                    `;
+                }
+            } catch (error) {
+                console.error('API Test Error:', error);
+                document.getElementById('result').innerHTML = `
+                    <h2>❌ API Test Gagal</h2>
+                    <p>Error: ${error.message}</p>
+                `;
+            }
+        }
+
+        // Auto test saat halaman load
+        window.onload = testKataSambutan;
+    </script>
+</body>
+
+</html>
