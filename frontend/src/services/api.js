@@ -64,7 +64,7 @@ class WordPressAPI {
      */
     async getPost(identifier) {
         try {
-            const response = await apiClient.get(transformUrl(`/wp/v2/posts/${identifier}`), { 
+            const response = await apiClient.get(transformUrl(`/wp/v2/posts/${identifier}`), {
                 params: { _embed: true }
             });
             return response;
@@ -80,7 +80,7 @@ class WordPressAPI {
      */
     async getPages() {
         try {
-            const response = await apiClient.get(transformUrl('/wp/v2/pages'), { 
+            const response = await apiClient.get(transformUrl('/wp/v2/pages'), {
                 params: { _embed: true }
             });
             return response;

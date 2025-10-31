@@ -68,15 +68,30 @@ cd frontend
 npm install
 ```
 
-#### Environment Configuration
+#### Environment Configuration ⚠️ IMPORTANT
 ```bash
-# Copy environment file
+# Copy environment template
 cp .env.example .env.local
 
-# Edit .env.local sesuai konfigurasi WordPress Anda
-REACT_APP_WP_API_URL=http://localhost/wordpress/wp-json
-REACT_APP_SITE_NAME=Desa Tanjung Rambutan
+# Edit .env.local dan pilih salah satu konfigurasi:
 ```
+
+**Opsi 1: Vite Proxy (Recommended untuk development)**
+```bash
+VITE_WP_API_URL=/wp-api
+```
+
+**Opsi 2: Direct URL (Ganti dengan IP WordPress server)**
+```bash
+VITE_WP_API_URL=http://192.168.1.93/New/web_desa_tanjung_rambutan/wordpress-backend
+```
+
+**Opsi 3: Local Development**
+```bash
+VITE_WP_API_URL=http://localhost:8000
+```
+
+📖 **Panduan lengkap**: Lihat `FRONTEND_SETUP_GUIDE.md`
 
 #### Jalankan Development Server
 ```bash

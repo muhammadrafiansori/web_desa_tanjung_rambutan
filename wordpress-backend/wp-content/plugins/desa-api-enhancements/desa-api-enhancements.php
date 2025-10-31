@@ -19,7 +19,7 @@ class DesaAPIEnhancements
     {
         add_action('init', array($this, 'init'));
         add_action('rest_api_init', array($this, 'register_api_routes'));
-        
+
         // CORS disabled in plugin - handled in wp-config.php instead
         // add_filter('rest_pre_serve_request', array($this, 'add_cors_headers'), 0, 4);
         // add_action('init', array($this, 'handle_cors_preflight'));
@@ -201,7 +201,7 @@ class DesaAPIEnhancements
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
         header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With');
-        
+
         return $served;
     }
 }

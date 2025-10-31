@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 const Home = () => {
+    const navigate = useNavigate();
     const [latestNews, setLatestNews] = useState([]);
     const [announcements, setAnnouncements] = useState([]);
     const [desaStats, setDesaStats] = useState({});
@@ -19,26 +21,37 @@ const Home = () => {
         try {
             console.log('🔄 Loading home data...');
             console.log('API_URL from env:', import.meta.env.VITE_WP_API_URL);
-            
+
             // Load data parallel untuk performance yang lebih baik
             const [postsData, pengumumanData, statsData] = await Promise.allSettled([
                 api.getPosts(1, 3), // Get latest 3 posts
                 api.getPengumuman(3), // Get latest 3 announcements
                 api.getDesaStats()
-            ]);            
-            
+            ]);
+
             // Handle posts data
             console.log('📰 Posts API result:', postsData);
             if (postsData.status === 'fulfilled') {
                 console.log('✅ Posts API success:', postsData.value.length, 'posts found');
-                const posts = postsData.value.map(post => ({
-                    id: post.id,
-                    title: post.title.rendered,
-                    excerpt: api.createExcerpt(post.content.rendered, 120),
-                    date: post.date,
-                    image: api.getFeaturedImageUrl(post) || '/default-news.jpg',
-                    slug: post.slug
-                }));
+                const posts = postsData.value.map(post => {
+                    const featuredImageUrl = api.getFeaturedImageUrl(post);
+                    console.log('🖼️ Post image debug:', {
+                        postId: post.id,
+                        title: post.title.rendered,
+                        hasFeaturedMedia: !!post._embedded?.['wp:featuredmedia'],
+                        featuredImageUrl: featuredImageUrl,
+                        fallbackUsed: !featuredImageUrl
+                    });
+
+                    return {
+                        id: post.id,
+                        title: post.title.rendered,
+                        excerpt: api.createExcerpt(post.content.rendered, 120),
+                        date: post.date,
+                        image: featuredImageUrl || `https://picsum.photos/800/400?random=${post.id}`,
+                        slug: post.slug
+                    };
+                });
                 setLatestNews(posts);
                 console.log('📋 Processed posts:', posts);
             } else {
@@ -50,14 +63,14 @@ const Home = () => {
                         title: "Gotong Royong Membersihkan Saluran Air",
                         excerpt: "Warga Desa Tanjung Rambutan mengadakan gotong royong untuk membersihkan saluran air di seluruh desa.",
                         date: "2024-10-25",
-                        image: "/default-news.jpg"
+                        image: "https://picsum.photos/800/400?random=1"
                     },
                     {
                         id: 2,
                         title: "Pembangunan Jalan Desa Tahap 2",
                         excerpt: "Pembangunan jalan desa tahap 2 telah dimulai dan diperkirakan selesai dalam 3 bulan.",
                         date: "2024-10-20",
-                        image: "/default-news.jpg"
+                        image: "https://picsum.photos/800/400?random=2"
                     }
                 ]);
             }
@@ -134,6 +147,12 @@ const Home = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleNewsClick = (news) => {
+        navigate(`/berita/${news.slug}`, {
+            state: { postId: news.id }
+        });
     };
 
     if (loading) {
@@ -437,14 +456,14 @@ const Home = () => {
                             {/* Contact Information */}
                             <div className="lg:col-span-2 p-8">
                                 <h3 className="text-xl font-bold text-gray-900 mb-6">Informasi Kontak</h3>
-                                
+
                                 <div className="space-y-6">
                                     {/* Address */}
                                     <div>
                                         <h4 className="font-semibold text-gray-900 mb-2">Alamat</h4>
                                         <p className="text-gray-600 leading-relaxed">
-                                            Jl. Raya Tanjung Rambutan<br/>
-                                            Kec. Kampar Kiri, Kab. Kampar<br/>
+                                            Jl. Raya Tanjung Rambutan<br />
+                                            Kec. Kampar Kiri, Kab. Kampar<br />
                                             Provinsi Riau 28461
                                         </p>
                                     </div>
@@ -489,16 +508,16 @@ const Home = () => {
 
                                     {/* Action Buttons */}
                                     <div className="pt-4 space-y-3">
-                                        <a 
-                                            href="https://maps.google.com/maps?ll=0.310596,101.083200&z=13&t=m&hl=id&gl=ID&mapclient=embed&q=Tanjung+Rambutan+Kampar+Riau" 
-                                            target="_blank" 
+                                        <a
+                                            href="https://maps.google.com/maps?ll=0.310596,101.083200&z=13&t=m&hl=id&gl=ID&mapclient=embed&q=Tanjung+Rambutan+Kampar+Riau"
+                                            target="_blank"
                                             rel="noopener noreferrer"
                                             className="block w-full bg-desa-green-600 text-white text-center py-3 rounded-lg font-medium hover:bg-desa-green-700 transition-colors"
                                         >
                                             Buka di Google Maps
                                         </a>
-                                        <a 
-                                            href="https://wa.me/628123456789" 
+                                        <a
+                                            href="https://wa.me/628123456789"
                                             target="_blank"
                                             className="block w-full bg-green-500 text-white text-center py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
                                         >
@@ -511,13 +530,13 @@ const Home = () => {
                             {/* Google Maps */}
                             <div className="lg:col-span-3">
                                 <div className="h-96 lg:h-full min-h-[400px]">
-                                    <iframe 
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92511.3954185628!2d101.08320040086461!3d0.31059586184797294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d513456a6bab0d%3A0xdd8fbd24f2b82583!2sTj.%20Rambutan%2C%20Kec.%20Kampar%2C%20Kabupaten%20Kampar%2C%20Riau!5e1!3m2!1sid!2sid!4v1761908542191!5m2!1sid!2sid" 
-                                        width="100%" 
-                                        height="100%" 
-                                        style={{ border: 0 }} 
-                                        allowFullScreen="" 
-                                        loading="lazy" 
+                                    <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92511.3954185628!2d101.08320040086461!3d0.31059586184797294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d513456a6bab0d%3A0xdd8fbd24f2b82583!2sTj.%20Rambutan%2C%20Kec.%20Kampar%2C%20Kabupaten%20Kampar%2C%20Riau!5e1!3m2!1sid!2sid!4v1761908542191!5m2!1sid!2sid"
+                                        width="100%"
+                                        height="100%"
+                                        style={{ border: 0 }}
+                                        allowFullScreen=""
+                                        loading="lazy"
                                         referrerPolicy="no-referrer-when-downgrade"
                                         title="Lokasi Desa Tanjung Rambutan, Kec. Kampar, Kabupaten Kampar, Riau">
                                     </iframe>
@@ -567,12 +586,12 @@ const Home = () => {
                                 <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                                     🗞️ Berita Terkini
                                 </h3>
-                                <a
-                                    href="/berita"
+                                <button
+                                    onClick={() => navigate('/berita')}
                                     className="bg-desa-green-600 text-white px-6 py-2 rounded-full hover:bg-desa-green-700 transition-colors font-medium text-sm shadow-lg hover:shadow-xl"
                                 >
                                     Lihat Semua Berita →
-                                </a>
+                                </button>
                             </div>
 
                             <div className="space-y-6">
@@ -612,7 +631,10 @@ const Home = () => {
                                                                 day: 'numeric'
                                                             })}
                                                         </div>
-                                                        <button className="text-desa-green-600 hover:text-desa-green-700 font-medium text-sm hover:bg-desa-green-50 px-3 py-1 rounded-full transition-colors">
+                                                        <button
+                                                            onClick={() => handleNewsClick(news)}
+                                                            className="text-desa-green-600 hover:text-desa-green-700 font-medium text-sm hover:bg-desa-green-50 px-3 py-1 rounded-full transition-colors"
+                                                        >
                                                             Baca Selengkapnya →
                                                         </button>
                                                     </div>
@@ -630,7 +652,10 @@ const Home = () => {
                                                 </div>
                                                 <div className="p-6 flex-1 flex flex-col justify-between">
                                                     <div>
-                                                        <h3 className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-desa-green-600 transition-colors line-clamp-2">
+                                                        <h3
+                                                            className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-desa-green-600 transition-colors line-clamp-2 cursor-pointer"
+                                                            onClick={() => handleNewsClick(news)}
+                                                        >
                                                             {news.title}
                                                         </h3>
                                                         <p className="text-gray-600 mb-4 line-clamp-2 text-sm">
@@ -646,7 +671,10 @@ const Home = () => {
                                                                 year: '2-digit'
                                                             })}
                                                         </div>
-                                                        <button className="text-desa-green-600 hover:text-desa-green-700 text-sm font-medium hover:bg-desa-green-50 px-2 py-1 rounded transition-colors">
+                                                        <button
+                                                            onClick={() => handleNewsClick(news)}
+                                                            className="text-desa-green-600 hover:text-desa-green-700 text-sm font-medium hover:bg-desa-green-50 px-2 py-1 rounded transition-colors"
+                                                        >
                                                             Baca →
                                                         </button>
                                                     </div>
@@ -659,7 +687,10 @@ const Home = () => {
 
                             {/* Load More Button */}
                             <div className="text-center mt-8">
-                                <button className="bg-white text-desa-green-600 border-2 border-desa-green-600 px-8 py-3 rounded-full font-medium hover:bg-desa-green-600 hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl">
+                                <button
+                                    onClick={() => navigate('/berita')}
+                                    className="bg-white text-desa-green-600 border-2 border-desa-green-600 px-8 py-3 rounded-full font-medium hover:bg-desa-green-600 hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl"
+                                >
                                     Muat Berita Lainnya
                                 </button>
                             </div>
@@ -737,7 +768,7 @@ const Home = () => {
                 </div>
             </section>
 
-            
+
         </div>
     );
 };

@@ -1,0 +1,9 @@
+<!-- Placeholder SVG untuk default news image -->
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#f3f4f6"/>
+  <rect x="250" y="150" width="300" height="100" rx="8" fill="#d1d5db"/>
+  <circle cx="300" cy="180" r="15" fill="#9ca3af"/>
+  <rect x="330" y="170" width="150" height="8" fill="#9ca3af"/>
+  <rect x="330" y="185" width="100" height="8" fill="#9ca3af"/>
+  <text x="400" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">Berita Desa Tanjung Rambutan</text>
+</svg>
