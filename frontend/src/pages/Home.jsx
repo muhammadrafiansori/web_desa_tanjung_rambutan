@@ -7,6 +7,7 @@ const Home = () => {
     const [desaStats, setDesaStats] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [orgMembers, setOrgMembers] = useState([]); // New state for organizational members
 
     useEffect(() => {
         loadHomeData();
@@ -18,13 +19,12 @@ const Home = () => {
 
         try {
             // Load data parallel untuk performance yang lebih baik
-            const [postsData, pengumumanData, statsData] = await Promise.allSettled([
+            const [postsData, pengumumanData, statsData, orgData] = await Promise.allSettled([
                 api.getPosts(1, 3), // Get latest 3 posts
                 api.getPengumuman(3), // Get latest 3 announcements
-                api.getDesaStats()
-            ]);
-
-            // Handle posts data
+                api.getDesaStats(),
+                api.getOrgMembers() // Fetch organizational members data
+            ]);            // Handle posts data
             if (postsData.status === 'fulfilled') {
                 const posts = postsData.value.map(post => ({
                     id: post.id,
@@ -197,7 +197,7 @@ const Home = () => {
                                                 e.target.nextSibling.style.display = 'flex';
                                             }}
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-br from-desa-green-100 to-desa-green-200 flex items-center justify-center text-6xl hidden">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-desa-green-100 to-desa-green-200 items-center justify-center text-6xl hidden">
                                             👨‍💼
                                         </div>
                                     </div>
