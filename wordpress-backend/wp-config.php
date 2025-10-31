@@ -91,13 +91,13 @@ define('WP_REST_ALLOW_ANONYMOUS_COMMENTS', true);
  * URL Configuration untuk akses dari network
  * Ubah sesuai IP address lokal Anda
  */
-define('WP_HOME', 'http://192.168.111.195/New/web_desa_tanjung_rambutan/wordpress-backend');
-define('WP_SITEURL', 'http://192.168.111.195/New/web_desa_tanjung_rambutan/wordpress-backend');
+define('WP_HOME', 'http://192.168.1.93/New/web_desa_tanjung_rambutan/wordpress-backend');
+define('WP_SITEURL', 'http://192.168.1.93/New/web_desa_tanjung_rambutan/wordpress-backend');
 
 /**
  * Allow WordPress to be accessed from different domains
  */
-$_SERVER['HTTP_HOST'] = '192.168.111.195';
+$_SERVER['HTTP_HOST'] = '192.168.1.93';
 
 /**
  * JWT Authentication (Optional - untuk autentikasi yang lebih aman)
