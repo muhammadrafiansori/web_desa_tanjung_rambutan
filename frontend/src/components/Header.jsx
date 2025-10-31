@@ -58,12 +58,12 @@ const Header = () => {
                                         <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                                     </svg>
                                 </button>
-                                <ul className="absolute top-full left-0 mt-2 bg-white shadow-xl rounded-lg min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 border border-gray-100">
-                                    <li><Link to="/about" className="block px-4 py-3 text-village-primary hover:bg-green-50 rounded-t-lg text-sm font-medium">Tentang Desa</Link></li>
-                                    <li><Link to="/profil/sejarah" className="block px-4 py-3 text-village-primary hover:bg-green-50 text-sm font-medium">Sejarah</Link></li>
-                                    <li><Link to="/profil/visi-misi" className="block px-4 py-3 text-village-primary hover:bg-green-50 text-sm font-medium">Visi & Misi</Link></li>
-                                    <li><Link to="/profil/geografis" className="block px-4 py-3 text-village-primary hover:bg-green-50 rounded-b-lg text-sm font-medium">Geografis</Link></li>
-                                    <li><Link to="/data-populasi" className="block px-4 py-3 text-village-primary hover:bg-green-50 text-sm font-medium">Data Populasi</Link></li>
+                                <ul className="dropdown-menu">
+                                    <li><Link to="/about" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-t-lg text-sm font-medium transition-colors">Tentang Desa</Link></li>
+                                    <li><Link to="/profil/sejarah" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 text-sm font-medium transition-colors">Sejarah</Link></li>
+                                    <li><Link to="/profil/visi-misi" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 text-sm font-medium transition-colors">Visi & Misi</Link></li>
+                                    <li><Link to="/profil/geografis" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 text-sm font-medium transition-colors">Geografis</Link></li>
+                                    <li><Link to="/data-populasi" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-b-lg text-sm font-medium transition-colors">Data Populasi</Link></li>
                                 </ul>
                             </li>
                             <li className="relative group">
@@ -73,9 +73,9 @@ const Header = () => {
                                         <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                                     </svg>
                                 </button>
-                                <ul className="absolute top-full left-0 mt-2 bg-white shadow-xl rounded-lg min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 border border-gray-100">
-                                    <li><Link to="/pemerintahan/struktur" className="block px-4 py-3 text-village-primary hover:bg-green-50 rounded-t-lg text-sm font-medium">Struktur Organisasi</Link></li>
-                                    <li><Link to="/pemerintahan/aparatur" className="block px-4 py-3 text-village-primary hover:bg-green-50 text-sm font-medium">Aparatur Desa</Link></li>
+                                <ul className="dropdown-menu">
+                                    <li><Link to="/pemerintahan/struktur" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-t-lg text-sm font-medium transition-colors">Struktur Organisasi</Link></li>
+                                    <li><Link to="/pemerintahan/aparatur" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-b-lg text-sm font-medium transition-colors">Aparatur Desa</Link></li>
                                 </ul>
                             </li>
                             <li><Link to="/berita" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Berita</Link></li>
@@ -100,7 +100,7 @@ const Header = () => {
 
                 {/* Mobile Navigation */}
                 <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-screen pb-4' : 'max-h-0'}`}>
-                    <nav className="bg-white/10 backdrop-blur-sm rounded-lg mx-4 mt-2">
+                    <nav className="glass rounded-lg mx-4 mt-2">
                         <ul className="p-2 space-y-1">
                             <li><Link to="/" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Beranda</Link></li>
                             <li><Link to="/about" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Profil Desa</Link></li>
