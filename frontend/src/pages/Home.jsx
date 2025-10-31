@@ -413,6 +413,130 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Lokasi & Kontak Section */}
+            <section className="bg-gray-50 py-20">
+                <div className="max-w-6xl mx-auto px-5">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                            Lokasi & Kontak
+                        </h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto">
+                            Kunjungi kantor desa kami untuk berbagai kebutuhan layanan administrasi
+                        </p>
+                    </div>
+
+                    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div className="grid lg:grid-cols-5">
+                            {/* Contact Information */}
+                            <div className="lg:col-span-2 p-8">
+                                <h3 className="text-xl font-bold text-gray-900 mb-6">Informasi Kontak</h3>
+                                
+                                <div className="space-y-6">
+                                    {/* Address */}
+                                    <div>
+                                        <h4 className="font-semibold text-gray-900 mb-2">Alamat</h4>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            Jl. Raya Tanjung Rambutan<br/>
+                                            Kec. Kampar Kiri, Kab. Kampar<br/>
+                                            Provinsi Riau 28461
+                                        </p>
+                                    </div>
+
+                                    {/* Contact */}
+                                    <div>
+                                        <h4 className="font-semibold text-gray-900 mb-3">Hubungi Kami</h4>
+                                        <div className="space-y-2">
+                                            <a href="tel:+62761123456" className="flex items-center text-gray-600 hover:text-desa-green-600 transition-colors">
+                                                <span className="w-5 h-5 mr-3 text-gray-400">📞</span>
+                                                (0761) 123-456
+                                            </a>
+                                            <a href="https://wa.me/628123456789" className="flex items-center text-gray-600 hover:text-green-600 transition-colors">
+                                                <span className="w-5 h-5 mr-3 text-gray-400">💬</span>
+                                                +62 812-3456-789
+                                            </a>
+                                            <a href="mailto:info@desatanjungrambutan.id" className="flex items-center text-gray-600 hover:text-blue-600 transition-colors">
+                                                <span className="w-5 h-5 mr-3 text-gray-400">✉️</span>
+                                                info@desatanjungrambutan.id
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    {/* Operating Hours */}
+                                    <div>
+                                        <h4 className="font-semibold text-gray-900 mb-3">Jam Operasional</h4>
+                                        <div className="text-gray-600 space-y-1 text-sm">
+                                            <div className="flex justify-between">
+                                                <span>Senin - Jumat</span>
+                                                <span>08:00 - 16:00</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span>Sabtu</span>
+                                                <span>08:00 - 12:00</span>
+                                            </div>
+                                            <div className="flex justify-between text-red-600">
+                                                <span>Minggu & Libur</span>
+                                                <span>Tutup</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Action Buttons */}
+                                    <div className="pt-4 space-y-3">
+                                        <a 
+                                            href="https://maps.google.com/maps?ll=0.310596,101.083200&z=13&t=m&hl=id&gl=ID&mapclient=embed&q=Tanjung+Rambutan+Kampar+Riau" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="block w-full bg-desa-green-600 text-white text-center py-3 rounded-lg font-medium hover:bg-desa-green-700 transition-colors"
+                                        >
+                                            Buka di Google Maps
+                                        </a>
+                                        <a 
+                                            href="https://wa.me/628123456789" 
+                                            target="_blank"
+                                            className="block w-full bg-green-500 text-white text-center py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
+                                        >
+                                            Chat WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Google Maps */}
+                            <div className="lg:col-span-3">
+                                <div className="h-96 lg:h-full min-h-[400px]">
+                                    <iframe 
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92511.3954185628!2d101.08320040086461!3d0.31059586184797294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d513456a6bab0d%3A0xdd8fbd24f2b82583!2sTj.%20Rambutan%2C%20Kec.%20Kampar%2C%20Kabupaten%20Kampar%2C%20Riau!5e1!3m2!1sid!2sid!4v1761908542191!5m2!1sid!2sid" 
+                                        width="100%" 
+                                        height="100%" 
+                                        style={{ border: 0 }} 
+                                        allowFullScreen="" 
+                                        loading="lazy" 
+                                        referrerPolicy="no-referrer-when-downgrade"
+                                        title="Lokasi Desa Tanjung Rambutan, Kec. Kampar, Kabupaten Kampar, Riau">
+                                    </iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Additional Info */}
+                    <div className="mt-8 grid md:grid-cols-3 gap-4 text-center">
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                            <div className="text-2xl font-bold text-desa-green-600 mb-1">08:00</div>
+                            <div className="text-sm text-gray-600">Jam Buka Layanan</div>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                            <div className="text-2xl font-bold text-desa-green-600 mb-1">24/7</div>
+                            <div className="text-sm text-gray-600">WhatsApp Support</div>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                            <div className="text-2xl font-bold text-desa-green-600 mb-1">Free</div>
+                            <div className="text-sm text-gray-600">Parkir Tersedia</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Berita Terkini Section */}
             <section className="bg-gray-50 py-20">
                 <div className="max-w-6xl mx-auto px-5">
@@ -606,54 +730,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Quick Services Section */}
-            <section className="py-20 bg-white">
-                <div className="max-w-6xl mx-auto px-5">
-                    <div className="text-center mb-16">
-                        <div className="inline-flex items-center gap-3 bg-village-primary-100 text-village-primary-600 px-6 py-2 rounded-full font-medium mb-4">
-                            🎯 Layanan Prima
-                        </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-desa-green-600 mb-4">Layanan Unggulan Desa</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                            Layanan administrasi desa yang mudah, cepat, dan terpercaya untuk memenuhi kebutuhan masyarakat
-                        </p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div className="bg-white text-center p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group border border-gray-100 hover:border-desa-green-200">
-                            <div className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">🆔</div>
-                            <h3 className="text-xl font-semibold text-desa-green-600 mb-3 group-hover:text-desa-green-700">e-KTP</h3>
-                            <p className="text-gray-600 text-sm leading-relaxed mb-4">Pelayanan pembuatan dan perpanjangan e-KTP</p>
-                            <button className="bg-desa-green-50 text-desa-green-600 px-4 py-2 rounded-full text-sm font-medium hover:bg-desa-green-100 transition-colors">
-                                Ajukan Sekarang
-                            </button>
-                        </div>
-                        <div className="bg-white text-center p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group border border-gray-100 hover:border-desa-green-200">
-                            <div className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">👨‍👩‍👧‍👦</div>
-                            <h3 className="text-xl font-semibold text-desa-green-600 mb-3 group-hover:text-desa-green-700">Kartu Keluarga</h3>
-                            <p className="text-gray-600 text-sm leading-relaxed mb-4">Pengurusan Kartu Keluarga baru dan perubahan data</p>
-                            <button className="bg-desa-green-50 text-desa-green-600 px-4 py-2 rounded-full text-sm font-medium hover:bg-desa-green-100 transition-colors">
-                                Ajukan Sekarang
-                            </button>
-                        </div>
-                        <div className="bg-white text-center p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group border border-gray-100 hover:border-desa-green-200">
-                            <div className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">📄</div>
-                            <h3 className="text-xl font-semibold text-desa-green-600 mb-3 group-hover:text-desa-green-700">Surat Keterangan</h3>
-                            <p className="text-gray-600 text-sm leading-relaxed mb-4">Berbagai surat keterangan untuk keperluan administrasi</p>
-                            <button className="bg-desa-green-50 text-desa-green-600 px-4 py-2 rounded-full text-sm font-medium hover:bg-desa-green-100 transition-colors">
-                                Ajukan Sekarang
-                            </button>
-                        </div>
-                        <div className="bg-white text-center p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group border border-gray-100 hover:border-desa-green-200">
-                            <div className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">💬</div>
-                            <h3 className="text-xl font-semibold text-desa-green-600 mb-3 group-hover:text-desa-green-700">Pengaduan Online</h3>
-                            <p className="text-gray-600 text-sm leading-relaxed mb-4">Sampaikan keluhan dan saran untuk perbaikan desa</p>
-                            <button className="bg-desa-green-50 text-desa-green-600 px-4 py-2 rounded-full text-sm font-medium hover:bg-desa-green-100 transition-colors">
-                                Sampaikan Aspirasi
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            
         </div>
     );
 };
