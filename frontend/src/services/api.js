@@ -149,7 +149,23 @@ class WordPressAPI {
      */
     async getLayanan() {
         try {
-            const response = await apiClient.get('/wp/v2/layanan?_embed=true');
+            const response = await apiClient.get(buildApiUrl('/wp/v2/layanan'), { 
+                params: { _embed: true }
+            });
+            return response;
+        } catch (error) {
+            throw this.handleError(error);
+        }
+    }
+
+    /**
+     * Get kata sambutan (welcome messages)
+     */
+    async getKataSambutan() {
+        try {
+            const response = await apiClient.get(buildApiUrl('/wp/v2/kata_sambutan'), { 
+                params: { _embed: true }
+            });
             return response;
         } catch (error) {
             throw this.handleError(error);
