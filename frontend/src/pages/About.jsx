@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const About = () => {
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        // Trigger animation after component mounts
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, 100);
+
+        return () => clearTimeout(timer);
+    }, []);
+
     const populationStats = {
         total: 2483,
         households: 696,
@@ -11,15 +22,21 @@ const About = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50">
             {/* Hero Section with Pattern */}
-            <div className="relative bg-gradient-to-r from-desa-green-600 to-desa-green-800 text-white py-24">
+            <div className={`relative bg-gradient-to-r from-desa-green-600 to-desa-green-800 text-white py-24 transition-all duration-1000 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+            }`}>
                 <div className="absolute inset-0 bg-black opacity-20"></div>
                 <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-10"></div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
                     <div className="text-center">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg">
+                        <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 drop-shadow-lg transition-all duration-1000 delay-300 ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                        }`}>
                             Tentang Desa Tanjung Rambutan
                         </h1>
-                        <p className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto leading-relaxed">
+                        <p className={`text-xl md:text-2xl text-green-100 max-w-3xl mx-auto leading-relaxed transition-all duration-1000 delay-500 ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                        }`}>
                             Mengenal lebih dekat sejarah, visi misi, dan profil lengkap Desa Tanjung Rambutan
                         </p>
                     </div>
@@ -28,7 +45,9 @@ const About = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 {/* Sejarah Section with Card Design */}
-                <div className="bg-white rounded-2xl shadow-xl p-8 mb-16 transform hover:scale-[1.02] transition-transform duration-300">
+                <div className={`bg-white rounded-2xl shadow-xl p-8 mb-16 transform hover:scale-[1.02] transition-all duration-1000 delay-700 ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}>
                     <div className="flex items-center mb-8">
                         <span className="w-12 h-12 bg-desa-green-100 rounded-full flex items-center justify-center mr-4">
                             📚
@@ -51,7 +70,9 @@ const About = () => {
                 </div>
 
                 {/* Photo Gallery Section */}
-                <div className="mb-16">
+                <div className={`mb-16 transition-all duration-1000 delay-900 ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}>
                     <h2 className="text-3xl font-bold text-center text-desa-green-600 mb-8">
                         Galeri Desa
                     </h2>
@@ -59,7 +80,7 @@ const About = () => {
                         {/* Photo Card 1 */}
                         <div className="group relative overflow-hidden rounded-2xl shadow-lg h-64">
                             <img
-                                src="/images/desa/desa1.jpg"
+                                src="/fotodesa/Galeri6.png"
                                 alt="Pemandangan Desa"
                                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                                 onError={(e) => {
@@ -77,7 +98,7 @@ const About = () => {
                         {/* Photo Card 2 */}
                         <div className="group relative overflow-hidden rounded-2xl shadow-lg h-64">
                             <img
-                                src="/images/desa/desa2.jpg"
+                                src="/fotodesa/Galeri8.png"
                                 alt="Balai Desa"
                                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                                 onError={(e) => {
@@ -95,7 +116,7 @@ const About = () => {
                         {/* Photo Card 3 */}
                         <div className="group relative overflow-hidden rounded-2xl shadow-lg h-64">
                             <img
-                                src="/images/desa/desa3.jpg"
+                                src="/fotodesa/Galeri2.png"
                                 alt="Kegiatan Masyarakat"
                                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                                 onError={(e) => {
@@ -113,7 +134,9 @@ const About = () => {
                 </div>
 
                 {/* Visi & Misi with Glass Effect */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 transition-all duration-1000 delay-1100 ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}>
                     <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-green-100 hover:-translate-y-1 transition-all duration-300">
                         <div className="flex items-center mb-6">
                             <span className="w-12 h-12 bg-desa-green-100 rounded-full flex items-center justify-center mr-4">
@@ -142,71 +165,36 @@ const About = () => {
                 </div>
 
                 {/* Data Demografis with Modern Stats Cards */}
-                <div className="mb-16">
+                <div className={`mb-16 transition-all duration-1000 delay-1300 ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}>
                     <h2 className="text-3xl font-bold text-center text-desa-green-600 mb-12">
                         Data Demografis
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-shadow duration-300">
+                        <div className={`bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-all duration-1000 delay-1400 ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                        }`}>
                             <div className="text-4xl font-bold text-desa-green-600 mb-2">{populationStats.total}</div>
                             <div className="text-gray-500 font-medium">Total Penduduk</div>
                         </div>
-                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-shadow duration-300">
+                        <div className={`bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-all duration-1000 delay-1500 ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                        }`}>
                             <div className="text-4xl font-bold text-desa-green-600 mb-2">{populationStats.households}</div>
                             <div className="text-gray-500 font-medium">Kepala Keluarga</div>
                         </div>
-                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-shadow duration-300">
+                        <div className={`bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-all duration-1000 delay-1600 ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                        }`}>
                             <div className="text-4xl font-bold text-desa-green-600 mb-2">{populationStats.male}</div>
                             <div className="text-gray-500 font-medium">Laki-laki</div>
                         </div>
-                        <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-shadow duration-300">
+                        <div className={`bg-white rounded-2xl shadow-lg p-6 border-t-4 border-desa-green-500 hover:shadow-xl transition-all duration-1000 delay-1700 ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                        }`}>
                             <div className="text-4xl font-bold text-desa-green-600 mb-2">{populationStats.female}</div>
                             <div className="text-gray-500 font-medium">Perempuan</div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Batas Wilayah with Interactive Cards */}
-                <div className="bg-white rounded-2xl shadow-xl p-8">
-                    <h2 className="text-3xl font-bold text-center text-desa-green-600 mb-12">
-                        Batas Wilayah
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                            {['Utara', 'Selatan'].map((direction, index) => (
-                                <div key={index} 
-                                    className="bg-gray-50 rounded-xl p-6 hover:bg-desa-green-50 transition-colors duration-300">
-                                    <div className="flex items-center space-x-4">
-                                        <span className="w-10 h-10 bg-desa-green-100 rounded-full flex items-center justify-center">
-                                            {direction === 'Utara' ? '⬆️' : '⬇️'}
-                                        </span>
-                                        <div>
-                                            <div className="font-medium text-gray-600">Sebelah {direction}</div>
-                                            <div className="text-desa-green-600">
-                                                {direction === 'Utara' ? 'Desa Muara Jalai' : 'Desa Siabu'}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="space-y-6">
-                            {['Barat', 'Timur'].map((direction, index) => (
-                                <div key={index} 
-                                    className="bg-gray-50 rounded-xl p-6 hover:bg-desa-green-50 transition-colors duration-300">
-                                    <div className="flex items-center space-x-4">
-                                        <span className="w-10 h-10 bg-desa-green-100 rounded-full flex items-center justify-center">
-                                            {direction === 'Barat' ? '⬅️' : '➡️'}
-                                        </span>
-                                        <div>
-                                            <div className="font-medium text-gray-600">Sebelah {direction}</div>
-                                            <div className="text-desa-green-600">
-                                                {direction === 'Barat' ? 'Desa Batu Belah' : 'Desa Simpang Kubu'}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
                         </div>
                     </div>
                 </div>
