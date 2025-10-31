@@ -130,6 +130,17 @@ export const useLayanan = () => {
 };
 
 /**
+ * Hook khusus untuk kata sambutan
+ */
+export const useKataSambutan = () => {
+    return useApi(
+        () => api.getKataSambutan(),
+        [],
+        []
+    );
+};
+
+/**
  * Hook khusus untuk informasi desa
  */
 export const useDesaInfo = () => {
