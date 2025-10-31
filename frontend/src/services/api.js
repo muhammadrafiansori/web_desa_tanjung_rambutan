@@ -3,7 +3,7 @@ import axios from 'axios';
 // Base URL untuk WordPress API
 // Untuk development, sesuaikan dengan URL WordPress lokal Anda
 // Untuk production, ganti dengan URL WordPress production
-const API_BASE_URL = import.meta.env.VITE_WP_API_URL || 'http://localhost/wordpress-backend/wp-json';
+const API_BASE_URL = import.meta.env.VITE_WP_API_URL || 'http://localhost:8000/wp-json';
 
 // Buat instance axios dengan konfigurasi default
 const apiClient = axios.create({
