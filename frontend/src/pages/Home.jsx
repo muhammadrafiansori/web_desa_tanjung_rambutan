@@ -7,7 +7,6 @@ const Home = () => {
     const [desaStats, setDesaStats] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [orgMembers, setOrgMembers] = useState([]); // New state for organizational members
 
     useEffect(() => {
         loadHomeData();
@@ -22,11 +21,10 @@ const Home = () => {
             console.log('API_URL from env:', import.meta.env.VITE_WP_API_URL);
             
             // Load data parallel untuk performance yang lebih baik
-            const [postsData, pengumumanData, statsData, orgData] = await Promise.allSettled([
+            const [postsData, pengumumanData, statsData] = await Promise.allSettled([
                 api.getPosts(1, 3), // Get latest 3 posts
                 api.getPengumuman(3), // Get latest 3 announcements
-                api.getDesaStats(),
-                api.getOrgMembers() // Fetch organizational members data
+                api.getDesaStats()
             ]);            
             
             // Handle posts data

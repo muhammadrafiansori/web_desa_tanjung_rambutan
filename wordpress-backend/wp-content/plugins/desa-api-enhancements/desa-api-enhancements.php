@@ -20,9 +20,9 @@ class DesaAPIEnhancements
         add_action('init', array($this, 'init'));
         add_action('rest_api_init', array($this, 'register_api_routes'));
         
-        // Use proper WordPress filters for CORS
-        add_filter('rest_pre_serve_request', array($this, 'add_cors_headers'), 0, 4);
-        add_action('init', array($this, 'handle_cors_preflight'));
+        // CORS disabled in plugin - handled in wp-config.php instead
+        // add_filter('rest_pre_serve_request', array($this, 'add_cors_headers'), 0, 4);
+        // add_action('init', array($this, 'handle_cors_preflight'));
     }
 
     public function init()
