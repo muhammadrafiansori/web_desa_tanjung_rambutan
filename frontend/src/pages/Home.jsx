@@ -4,23 +4,82 @@ import api from '../services/api';
 
 const Home = () => {
     const navigate = useNavigate();
-    const [latestNews, setLatestNews] = useState([]);
-    const [announcements, setAnnouncements] = useState([]);
-    const [desaStats, setDesaStats] = useState({});
-    const [kataSambutan, setKataSambutan] = useState(null);
-    const [loading, setLoading] = useState(true);
+    // Initialize with static fallback data for faster loading
+    const [latestNews, setLatestNews] = useState([
+        {
+            id: 1,
+            title: "Website Desa Tanjung Rambutan Diluncurkan",
+            excerpt: "Website resmi Desa Tanjung Rambutan kini telah diluncurkan untuk memberikan informasi terkini kepada masyarakat.",
+            date: "2024-10-28",
+            image: "/default-news.jpg",
+            slug: "website-desa-diluncurkan"
+        },
+        {
+            id: 2,
+            title: "Program Pembangunan Infrastruktur Desa",
+            excerpt: "Pembangunan jalan dan fasilitas umum terus dilakukan untuk meningkatkan kesejahteraan masyarakat.",
+            date: "2024-10-25",
+            image: "/default-news.jpg",
+            slug: "program-pembangunan-infrastruktur"
+        },
+        {
+            id: 3,
+            title: "Kegiatan Posyandu Rutin Bulan Oktober",
+            excerpt: "Posyandu rutin dilaksanakan setiap bulan untuk memantau kesehatan ibu dan anak.",
+            date: "2024-10-20",
+            image: "/default-news.jpg",
+            slug: "kegiatan-posyandu-oktober"
+        }
+    ]);
+    const [announcements, setAnnouncements] = useState([
+        {
+            id: 1,
+            title: "Pengumuman Jadwal Pelayanan Administrasi",
+            content: "Pelayanan administrasi desa buka setiap hari Senin-Jumat pukul 08.00-15.00 WIB.",
+            date: "2024-10-28",
+            urgent: true
+        },
+        {
+            id: 2,
+            title: "Himbauan Keamanan dan Ketertiban",
+            content: "Masyarakat diimbau untuk selalu menjaga keamanan lingkungan dan melaporkan hal-hal mencurigakan.",
+            date: "2024-10-25",
+            urgent: false
+        }
+    ]);
+    const [desaStats, setDesaStats] = useState({
+        total_penduduk: 2847,
+        total_kk: 892,
+        laki_laki: 1456,
+        perempuan: 1391,
+        wilayah_rt: 8,
+        wilayah_rw: 3
+    });
+    const [kataSambutan, setKataSambutan] = useState({
+        id: 1,
+        content: `<p>Assalamualaikum warahmatullahi wabarakatuh,</p>
+                 <p>Selamat datang di website resmi Desa Tanjung Rambutan. Kami berkomitmen untuk memberikan pelayanan terbaik kepada masyarakat dan membangun desa yang maju, mandiri, dan sejahtera.</p>
+                 <p>Melalui website ini, kami berharap dapat meningkatkan transparansi dan komunikasi dengan seluruh masyarakat desa. Mari bersama-sama membangun Tanjung Rambutan yang lebih baik.</p>
+                 <p>Wassalamualaikum warahmatullahi wabarakatuh.</p>`,
+        kepala_desa: 'H. Ahmad Rahman',
+        jabatan: 'Kepala Desa Tanjung Rambutan',
+        foto_kepala_desa: null,
+        date: new Date().toISOString()
+    });
+    const [loading, setLoading] = useState(false); // Changed to false for immediate display
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        loadHomeData();
+        // Load data in background without blocking UI
+        loadHomeDataBackground();
     }, []);
 
-    const loadHomeData = async () => {
-        setLoading(true);
+    const loadHomeDataBackground = async () => {
+        // Load data in background without showing loading states
         setError(null);
 
         try {
-            console.log('🔄 Loading home data...');
+            console.log('🔄 Loading home data in background...');
             console.log('API_URL from env:', import.meta.env.VITE_WP_API_URL);
 
             // Load data parallel untuk performance yang lebih baik
@@ -57,66 +116,36 @@ const Home = () => {
                 setLatestNews(posts);
                 console.log('📋 Processed posts:', posts);
             } else {
-                console.log('❌ Posts API failed:', postsData.reason);
-                // Fallback data jika API gagal
-                setLatestNews([
-                    {
-                        id: 1,
-                        title: "Gotong Royong Membersihkan Saluran Air",
-                        excerpt: "Warga Desa Tanjung Rambutan mengadakan gotong royong untuk membersihkan saluran air di seluruh desa.",
-                        date: "2024-10-25",
-                        image: "https://picsum.photos/800/400?random=1"
-                    },
-                    {
-                        id: 2,
-                        title: "Pembangunan Jalan Desa Tahap 2",
-                        excerpt: "Pembangunan jalan desa tahap 2 telah dimulai dan diperkirakan selesai dalam 3 bulan.",
-                        date: "2024-10-20",
-                        image: "https://picsum.photos/800/400?random=2"
-                    }
-                ]);
+                console.log('❌ Posts API failed, keeping initial data:', postsData.reason);
             }
 
-            // Handle announcements data
+            // Handle announcements data - only update if successful
+            console.log('📢 Pengumuman API result:', pengumumanData);
             if (pengumumanData.status === 'fulfilled') {
                 const announcements = pengumumanData.value.map(announcement => ({
                     id: announcement.id,
                     title: announcement.title.rendered,
+                    content: announcement.content?.rendered || announcement.excerpt?.rendered || '',
                     date: announcement.date,
-                    slug: announcement.slug
+                    slug: announcement.slug,
+                    urgent: false
                 }));
                 setAnnouncements(announcements);
+                console.log('✅ Pengumuman API success:', announcements);
             } else {
-                // Fallback data jika API gagal
-                setAnnouncements([
-                    {
-                        id: 1,
-                        title: "Pendaftaran Bantuan Sosial Bulan November",
-                        date: "2024-10-28"
-                    },
-                    {
-                        id: 2,
-                        title: "Rapat Koordinasi RT/RW",
-                        date: "2024-10-30"
-                    }
-                ]);
+                console.log('❌ Pengumuman API failed, keeping initial data:', pengumumanData.reason);
             }
 
-            // Handle stats data
+            // Handle stats data - only update if successful
+            console.log('📊 Stats API result:', statsData);
             if (statsData.status === 'fulfilled') {
                 setDesaStats(statsData.value);
+                console.log('✅ Stats API success:', statsData.value);
             } else {
-                // Fallback data jika API gagal
-                setDesaStats({
-                    jumlah_penduduk: 2456,
-                    jumlah_kk: 678,
-                    luas_wilayah: 15.8,
-                    jumlah_rt: 12,
-                    jumlah_rw: 4
-                });
+                console.log('❌ Stats API failed, keeping initial data:', statsData.reason);
             }
 
-            // Handle kata sambutan data
+            // Handle kata sambutan data - only update if successful
             console.log('💬 Kata Sambutan API result:', kataSambutanData);
             if (kataSambutanData.status === 'fulfilled' && kataSambutanData.value?.success && kataSambutanData.value.data) {
                 console.log('✅ Kata Sambutan API success:', kataSambutanData.value.data);
@@ -130,66 +159,12 @@ const Home = () => {
                     date: sambutan.date
                 });
             } else {
-                console.log('❌ Kata Sambutan API failed:', kataSambutanData.reason);
-                // Fallback kata sambutan
-                setKataSambutan({
-                    id: 1,
-                    content: `<p>Assalamualaikum warahmatullahi wabarakatuh,</p>
-                             <p>Selamat datang di website resmi Desa Tanjung Rambutan. Kami berkomitmen untuk memberikan pelayanan terbaik kepada masyarakat dan membangun desa yang maju, mandiri, dan sejahtera.</p>
-                             <p>Melalui website ini, kami berharap dapat meningkatkan transparansi dan komunikasi dengan seluruh masyarakat desa. Mari bersama-sama membangun Tanjung Rambutan yang lebih baik.</p>
-                             <p>Wassalamualaikum warahmatullahi wabarakatuh.</p>`,
-                    kepala_desa: 'H. Ahmad Rahman',
-                    jabatan: 'Kepala Desa Tanjung Rambutan',
-                    foto_kepala_desa: null,
-                    date: new Date().toISOString()
-                });
+                console.log('❌ Kata Sambutan API failed, keeping initial data:', kataSambutanData.reason);
             }
 
         } catch (error) {
-            console.error('Error loading home data:', error);
-            setError('Gagal memuat data. Menggunakan data lokal.');
-
-            // Use fallback data
-            setLatestNews([
-                {
-                    id: 1,
-                    title: "Website Desa Tanjung Rambutan Diluncurkan",
-                    excerpt: "Website resmi Desa Tanjung Rambutan kini telah diluncurkan untuk memberikan informasi terkini kepada masyarakat.",
-                    date: "2024-10-28",
-                    image: "/default-news.jpg"
-                }
-            ]);
-
-            setAnnouncements([
-                {
-                    id: 1,
-                    title: "Selamat datang di Website Desa Tanjung Rambutan",
-                    date: "2024-10-28"
-                }
-            ]);
-
-            setDesaStats({
-                jumlah_penduduk: 2456,
-                jumlah_kk: 678,
-                luas_wilayah: 15.8,
-                jumlah_rt: 12,
-                jumlah_rw: 4
-            });
-
-            // Fallback kata sambutan
-            setKataSambutan({
-                id: 1,
-                content: `<p>Assalamualaikum warahmatullahi wabarakatuh,</p>
-                         <p>Selamat datang di website resmi Desa Tanjung Rambutan. Kami berkomitmen untuk memberikan pelayanan terbaik kepada masyarakat dan membangun desa yang maju, mandiri, dan sejahtera.</p>
-                         <p>Melalui website ini, kami berharap dapat meningkatkan transparansi dan komunikasi dengan seluruh masyarakat desa. Mari bersama-sama membangun Tanjung Rambutan yang lebih baik.</p>
-                         <p>Wassalamualaikum warahmatullahi wabarakatuh.</p>`,
-                kepala_desa: 'H. Ahmad Rahman',
-                jabatan: 'Kepala Desa Tanjung Rambutan',
-                foto_kepala_desa: null,
-                date: new Date().toISOString()
-            });
-        } finally {
-            setLoading(false);
+            console.error('Error loading home data in background:', error);
+            setError('Koneksi terbatas, menampilkan data lokal.');
         }
     };
 
@@ -198,15 +173,6 @@ const Home = () => {
             state: { postId: news.id }
         });
     };
-
-    if (loading) {
-        return (
-            <div className="flex flex-col items-center justify-center min-h-96 text-desa-green-600">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-desa-green-600 mb-4"></div>
-                <p className="text-lg">Memuat data...</p>
-            </div>
-        );
-    }
 
     return (
         <div className="min-h-screen">
@@ -295,10 +261,6 @@ const Home = () => {
 
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                         <div className="text-center mb-12 sm:mb-16">
-                            <div className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm text-desa-green-700 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm font-semibold mb-4 sm:mb-6 shadow-lg border border-desa-green-200">
-                                <span className="text-base sm:text-lg">💬</span>
-                                <span>Kata Sambutan</span>
-                            </div>
                             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 tracking-tight">
                                 Sambutan
                                 <span className="block text-desa-green-600 mt-2">Kepala Desa</span>

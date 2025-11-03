@@ -11,7 +11,7 @@ export default defineConfig({
     proxy: {
       // Proxy WordPress API untuk bypass CORS
       '/wp-api': {
-        target: 'http://192.168.1.93/New/web_desa_tanjung_rambutan/wordpress-backend',
+        target: 'http://172.20.10.6/New/web_desa_tanjung_rambutan/wordpress-backend',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/wp-api/, ''),
         configure: (proxy, _options) => {

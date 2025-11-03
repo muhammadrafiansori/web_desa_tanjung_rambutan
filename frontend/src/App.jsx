@@ -11,6 +11,7 @@ import History from './pages/History'; // Import History page
 import Geography from './pages/Geography'; // Import Geography page
 import Berita from './pages/Berita'; // Import Berita page
 import BeritaDetail from './pages/BeritaDetail'; // Import BeritaDetail page
+import ProfilDesa from './pages/ProfilDesa'; // Import ProfilDesa page
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/profil/geografis" element={<Geography />} /> {/* Route for Geography page */}
             <Route path="/berita" element={<Berita />} /> {/* Route for Berita listing page */}
             <Route path="/berita/:slug" element={<BeritaDetail />} /> {/* Route for Berita detail page */}
+            <Route path="/profil-desa" element={<ProfilDesa />} /> {/* Route for Profil Desa page */}
             {/* Tambahkan route lain di sini nanti */}
           </Routes>
         </main>

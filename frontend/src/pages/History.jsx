@@ -95,9 +95,6 @@ const History = () => {
                 }`}>
                     <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-white/20 hover:transform hover:-translate-y-1 transition-all duration-300">
                         <h2 className="text-2xl font-bold text-desa-green-600 mb-6 flex items-center">
-                            <span className="w-10 h-10 rounded-full bg-desa-green-100 flex items-center justify-center mr-3">
-                                🎯
-                            </span>
                             Visi
                         </h2>
                         <p className="text-gray-700 leading-relaxed">
@@ -106,9 +103,6 @@ const History = () => {
                     </div>
                     <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-white/20 hover:transform hover:-translate-y-1 transition-all duration-300">
                         <h2 className="text-2xl font-bold text-desa-green-600 mb-6 flex items-center">
-                            <span className="w-10 h-10 rounded-full bg-desa-green-100 flex items-center justify-center mr-3">
-                                🚀
-                            </span>
                             Misi
                         </h2>
                         <ul className="list-none space-y-4">
@@ -137,9 +131,6 @@ const History = () => {
                     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}>
                     <h2 className="text-3xl font-bold text-desa-green-600 mb-8 flex items-center">
-                        <span className="w-12 h-12 rounded-full bg-desa-green-100 flex items-center justify-center mr-4">
-                            👥
-                        </span>
                         Sejarah Kepemimpinan
                     </h2>
                     <div className="overflow-x-auto">
@@ -182,9 +173,6 @@ const History = () => {
                 }`}>
                     <div className="bg-white rounded-2xl shadow-xl p-8 hover:transform hover:-translate-y-1 transition-all duration-300">
                         <h2 className="text-2xl font-bold text-desa-green-600 mb-6 flex items-center">
-                            <span className="w-10 h-10 rounded-full bg-desa-green-100 flex items-center justify-center mr-3">
-                                🗺️
-                            </span>
                             Batas Wilayah
                         </h2>
                         <ul className="space-y-4">
@@ -217,9 +205,6 @@ const History = () => {
 
                     <div className="bg-white rounded-2xl shadow-xl p-8 hover:transform hover:-translate-y-1 transition-all duration-300">
                         <h2 className="text-2xl font-bold text-desa-green-600 mb-6 flex items-center">
-                            <span className="w-10 h-10 rounded-full bg-desa-green-100 flex items-center justify-center mr-3">
-                                📍
-                            </span>
                             Pembagian Wilayah
                         </h2>
                         <ul className="space-y-4">

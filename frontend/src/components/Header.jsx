@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Icon, FaBars, FaTimes, FaChevronDown } from './Icons';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ const Header = () => {
                                     e.target.nextSibling.style.display = 'flex';
                                 }}
                             />
-                            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center flex-shrink-0 hidden">
+                            <div className="w-12 h-12 bg-white rounded-full hidden items-center justify-center flex-shrink-0">
                                 <svg className="w-8 h-8 text-village-primary" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
                                 </svg>
@@ -54,9 +55,7 @@ const Header = () => {
                             <li className="relative group">
                                 <button className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm flex items-center">
                                     Profil Desa
-                                    <svg className="ml-1 w-4 h-4 transform group-hover:rotate-180 transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                                    </svg>
+                                    <Icon icon={FaChevronDown} size="sm" className="ml-1 transform group-hover:rotate-180 transition-transform duration-200" />
                                 </button>
                                 <ul className="dropdown-menu">
                                     <li><Link to="/about" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-t-lg text-sm font-medium transition-colors">Tentang Desa</Link></li>
@@ -69,9 +68,7 @@ const Header = () => {
                             <li className="relative group">
                                 <button className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm flex items-center">
                                     Pemerintahan
-                                    <svg className="ml-1 w-4 h-4 transform group-hover:rotate-180 transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                                    </svg>
+                                    <Icon icon={FaChevronDown} size="sm" className="ml-1 transform group-hover:rotate-180 transition-transform duration-200" />
                                 </button>
                                 <ul className="dropdown-menu">
                                     <li><Link to="/pemerintahan/struktur" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-t-lg text-sm font-medium transition-colors">Struktur Organisasi</Link></li>
@@ -79,7 +76,7 @@ const Header = () => {
                                 </ul>
                             </li>
                             <li><Link to="/berita" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Berita</Link></li>
-                            <li><Link to="/pengumuman" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Pengumuman</Link></li>
+                            <li><Link to="/profil-desa" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Buku Profil Desa</Link></li>
                             <li><Link to="/layanan" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Layanan</Link></li>
                             <li><Link to="/galeri" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Galeri</Link></li>
                             <li><Link to="/kontak" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Kontak</Link></li>
@@ -107,7 +104,7 @@ const Header = () => {
                             <li><Link to="/pemerintahan/struktur" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Struktur Organisasi</Link></li>
                             <li><Link to="/pemerintahan/aparatur" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Aparatur Desa</Link></li>
                             <li><Link to="/berita" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Berita</Link></li>
-                            <li><Link to="/pengumuman" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Pengumuman</Link></li>
+                            <li><Link to="/profil-desa" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Buku Profil Desa</Link></li>
                             <li><Link to="/layanan" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Layanan</Link></li>
                             <li><Link to="/galeri" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Galeri</Link></li>
                             <li><Link to="/kontak" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Kontak</Link></li>

@@ -49,9 +49,6 @@ const About = () => {
                     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}>
                     <div className="flex items-center mb-8">
-                        <span className="w-12 h-12 bg-desa-green-100 rounded-full flex items-center justify-center mr-4">
-                            📚
-                        </span>
                         <h2 className="text-3xl font-bold text-desa-green-600">
                             Sejarah Desa
                         </h2>
@@ -139,9 +136,6 @@ const About = () => {
                 }`}>
                     <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-green-100 hover:-translate-y-1 transition-all duration-300">
                         <div className="flex items-center mb-6">
-                            <span className="w-12 h-12 bg-desa-green-100 rounded-full flex items-center justify-center mr-4">
-                                🎯
-                            </span>
                             <h3 className="text-2xl font-bold text-desa-green-600">Visi</h3>
                         </div>
                         <p className="text-gray-600 leading-relaxed">
@@ -150,9 +144,6 @@ const About = () => {
                     </div>
                     <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-green-100 hover:-translate-y-1 transition-all duration-300">
                         <div className="flex items-center mb-6">
-                            <span className="w-12 h-12 bg-desa-green-100 rounded-full flex items-center justify-center mr-4">
-                                🚀
-                            </span>
                             <h3 className="text-2xl font-bold text-desa-green-600">Misi</h3>
                         </div>
                         <ul className="space-y-4 text-gray-600">
