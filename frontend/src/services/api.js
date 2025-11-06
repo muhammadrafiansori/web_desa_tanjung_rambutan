@@ -405,6 +405,153 @@ class WordPressAPI {
         const text = this.stripHtml(content);
         return text.length > length ? text.substring(0, length) + '...' : text;
     }
+
+    // ===== GALLERY =====
+
+    /**
+     * Get gallery photos from WordPress media library
+     * @param {string} category - Photo category filter
+     * @param {number} perPage - Photos per page
+     */
+    async getGalleryPhotos(category = '', perPage = 50) {
+        try {
+            const params = {
+                per_page: perPage,
+                media_type: 'image',
+                _embed: true
+            };
+
+            // If category filter is provided, add to params
+            if (category && category !== 'semua') {
+                // Assuming we use tags or categories to organize gallery photos
+                params.tags = category;
+            }
+
+            const response = await apiClient.get(transformUrl('/wp/v2/media'), { params });
+
+            // Transform WordPress media response to gallery format
+            return response.map(media => ({
+                id: media.id,
+                title: media.title.rendered || media.alt_text || 'Untitled',
+                category: this.extractCategoryFromMedia(media),
+                image: media.source_url,
+                thumbnail: media.media_details?.sizes?.medium?.source_url || media.source_url,
+                description: media.description.rendered || media.alt_text || '',
+                date: media.date,
+                photographer: media.author_name || 'Tim KKN Desa Tanjung Rambutan',
+                alt_text: media.alt_text || ''
+            }));
+
+        } catch (error) {
+            console.error('Error fetching gallery photos:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Get single photo details
+     * @param {number} photoId - Photo ID
+     */
+    async getPhotoById(photoId) {
+        try {
+            const response = await apiClient.get(transformUrl(`/wp/v2/media/${photoId}`), {
+                params: { _embed: true }
+            });
+
+            return {
+                id: response.id,
+                title: response.title.rendered || response.alt_text || 'Untitled',
+                category: this.extractCategoryFromMedia(response),
+                image: response.source_url,
+                description: response.description.rendered || response.alt_text || '',
+                date: response.date,
+                photographer: response.author_name || 'Tim KKN Desa Tanjung Rambutan',
+                alt_text: response.alt_text || '',
+                metadata: response.media_details || {}
+            };
+
+        } catch (error) {
+            console.error('Error fetching photo details:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Upload photo to gallery
+     * @param {File} file - Photo file
+     * @param {Object} metadata - Photo metadata (title, category, description)
+     */
+    async uploadPhoto(file, metadata = {}) {
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            if (metadata.title) formData.append('title', metadata.title);
+            if (metadata.alt_text) formData.append('alt_text', metadata.alt_text);
+            if (metadata.description) formData.append('description', metadata.description);
+            if (metadata.caption) formData.append('caption', metadata.caption);
+
+            const response = await apiClient.post(transformUrl('/wp/v2/media'), formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+
+            return response;
+
+        } catch (error) {
+            console.error('Error uploading photo:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Extract category from media object
+     * @param {Object} media - WordPress media object
+     */
+    extractCategoryFromMedia(media) {
+        // Try to extract category from filename or metadata
+        const filename = media.slug || media.title?.rendered || '';
+
+        if (filename.includes('kegiatan')) return 'kegiatan';
+        if (filename.includes('pemandangan')) return 'pemandangan';
+        if (filename.includes('kantor')) return 'kantor';
+
+        // Check media details for category info
+        if (media.media_details?.meta?.category) {
+            return media.media_details.meta.category;
+        }
+
+        // Default category
+        return 'pemandangan';
+    }
+
+    /**
+     * Get gallery statistics
+     */
+    async getGalleryStats() {
+        try {
+            const photos = await this.getGalleryPhotos();
+
+            const stats = {
+                total: photos.length,
+                kegiatan: photos.filter(p => p.category === 'kegiatan').length,
+                pemandangan: photos.filter(p => p.category === 'pemandangan').length,
+                kantor: photos.filter(p => p.category === 'kantor').length
+            };
+
+            return stats;
+
+        } catch (error) {
+            console.error('Error fetching gallery stats:', error);
+            return {
+                total: 0,
+                kegiatan: 0,
+                pemandangan: 0,
+                kantor: 0
+            };
+        }
+    }
 }
 
 // Export singleton instance

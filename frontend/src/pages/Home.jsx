@@ -199,10 +199,10 @@ const Home = () => {
                             Profil Desa
                         </a>
                         <a
-                            href="/layanan"
+                            href="/galeri"
                             className="border-2 border-white text-white hover:bg-white hover:text-desa-green-600 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:-translate-y-1"
                         >
-                            Layanan Desa
+                            Galeri Desa
                         </a>
                     </div>
                 </div>
@@ -436,10 +436,10 @@ const Home = () => {
                                         Lihat Program Desa
                                     </a>
                                     <a
-                                        href="/layanan"
+                                        href="/galeri"
                                         className="border-2 border-white text-white hover:bg-white hover:text-desa-green-600 px-6 py-3 rounded-full font-semibold transition-all duration-300 text-center"
                                     >
-                                        Akses Layanan
+                                        Lihat Galeri
                                     </a>
                                 </div>
                             </div>

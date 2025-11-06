@@ -12,6 +12,7 @@ import Geography from './pages/Geography'; // Import Geography page
 import Berita from './pages/Berita'; // Import Berita page
 import BeritaDetail from './pages/BeritaDetail'; // Import BeritaDetail page
 import ProfilDesa from './pages/ProfilDesa'; // Import ProfilDesa page
+import Gallery from './pages/Gallery'; // Import Gallery page
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/berita" element={<Berita />} /> {/* Route for Berita listing page */}
             <Route path="/berita/:slug" element={<BeritaDetail />} /> {/* Route for Berita detail page */}
             <Route path="/profil-desa" element={<ProfilDesa />} /> {/* Route for Profil Desa page */}
+            <Route path="/galeri" element={<Gallery />} /> {/* Route for Gallery page */}
             {/* Tambahkan route lain di sini nanti */}
           </Routes>
         </main>

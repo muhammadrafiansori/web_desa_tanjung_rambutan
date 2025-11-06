@@ -40,8 +40,8 @@ const Footer = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href="/layanan" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Layanan
+                                <a href="/galeri" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
+                                    Galeri
                                 </a>
                             </li>
                             <li>
@@ -52,28 +52,28 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Layanan */}
+                    {/* Media & Galeri */}
                     <div>
-                        <h3 className="text-desa-green-100 text-lg font-semibold mb-4">Layanan Desa</h3>
+                        <h3 className="text-desa-green-100 text-lg font-semibold mb-4">Media & Galeri</h3>
                         <ul className="space-y-2">
                             <li>
-                                <a href="/layanan/ktp" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Kartu Tanda Penduduk
+                                <a href="/galeri" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
+                                    Galeri Foto
                                 </a>
                             </li>
                             <li>
-                                <a href="/layanan/kk" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Kartu Keluarga
+                                <a href="/berita" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
+                                    Berita Desa
                                 </a>
                             </li>
                             <li>
-                                <a href="/layanan/surat-keterangan" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Surat Keterangan
+                                <a href="/profil-desa" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
+                                    Buku Profil Desa
                                 </a>
                             </li>
                             <li>
-                                <a href="/layanan/pengaduan" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Pengaduan Online
+                                <a href="/pemerintahan/struktur" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
+                                    Struktur Organisasi
                                 </a>
                             </li>
                         </ul>
