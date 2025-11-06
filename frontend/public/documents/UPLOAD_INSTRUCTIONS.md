@@ -1,23 +1,39 @@
-# 📋 Petunjuk Upload File PDF Buku Profil Desa
+# 📋 Petunjuk Upload File PDF - UPDATED
 
-## 🎯 Yang Harus Dilakukan:
+## 🎯 Cara Upload PDF Baru:
 
-### 1. Upload File PDF Buku Profil
-- **Lokasi**: Letakkan file PDF Anda di folder ini
-- **Nama File**: `profil-desa-2024.pdf` (pastikan nama persis sama)
-- **Ukuran**: Maksimal 10MB
+### Metode 1: Menggunakan PDF Manager (Recommended) ⭐
+1. Buka PowerShell di root folder project
+2. Jalankan: `.\upload-pdf-manager.ps1`
+3. Pilih menu "1" untuk upload PDF
+4. Pilih file PDF dari komputer
+5. File otomatis tercopy ke folder ini
+
+### Metode 2: Manual
+- **Lokasi**: Copy file PDF ke folder `/frontend/public/documents/`
+- **Ukuran**: Maksimal 10MB untuk performa optimal
 - **Format**: PDF yang dapat dibuka di browser
 
-### 2. Upload Cover Image (Opsional)
-- **Lokasi**: `/public/images/book-cover.png`
-- **Format**: PNG (atau JPG)
-- **Ukuran**: Maksimal 2MB
-- **Dimensi**: 600x800px (rasio buku)
+## 📝 Registrasi PDF di Website:
+
+Setelah upload, daftarkan PDF di file `ProfilDesa.jsx`:
+1. Buka `/frontend/src/pages/ProfilDesa.jsx`
+2. Tambahkan data dokumen baru di array `documents`
+3. Sesuaikan informasi: title, description, fileSize, dll.
+
+## 📂 File Yang Sudah Ada:
+
+✅ **PDF Tersedia:**
+- [x] profil-desa-2024.pdf (5.2 MB)
+- [x] PRODUK-HUKUM-TJ-RAMBUTAN.pdf (3.8 MB)
 
 ## 🔧 Status Implementasi:
 
 ✅ **Sudah Selesai:**
 - [x] Navigation menu diubah dari "Regulasi Desa" ke "Profil Desa"
+- [x] Multiple PDF support system
+- [x] PDF Manager script
+- [x] Dynamic document selection
 - [x] Route `/profil-desa` sudah dibuat
 - [x] Komponen `ProfilDesa.jsx` sudah dibuat dengan fitur:
   - Preview buku profil

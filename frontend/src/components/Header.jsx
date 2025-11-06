@@ -60,20 +60,17 @@ const Header = () => {
                                 <ul className="dropdown-menu">
                                     <li><Link to="/about" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-t-lg text-sm font-medium transition-colors">Tentang Desa</Link></li>
                                     <li><Link to="/profil/sejarah" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 text-sm font-medium transition-colors">Sejarah</Link></li>
-                                    <li><Link to="/profil/visi-misi" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 text-sm font-medium transition-colors">Visi & Misi</Link></li>
                                     <li><Link to="/profil/geografis" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 text-sm font-medium transition-colors">Geografis</Link></li>
                                     <li><Link to="/data-populasi" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-b-lg text-sm font-medium transition-colors">Data Populasi</Link></li>
                                 </ul>
                             </li>
-                            <li className="relative group">
-                                <button className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm flex items-center">
-                                    Pemerintahan
-                                    <Icon icon={FaChevronDown} size="sm" className="ml-1 transform group-hover:rotate-180 transition-transform duration-200" />
-                                </button>
-                                <ul className="dropdown-menu">
-                                    <li><Link to="/pemerintahan/struktur" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-t-lg text-sm font-medium transition-colors">Struktur Organisasi</Link></li>
-                                    <li><Link to="/pemerintahan/aparatur" className="block px-4 py-3 text-desa-green-600 hover:bg-desa-green-50 hover:text-desa-green-700 rounded-b-lg text-sm font-medium transition-colors">Aparatur Desa</Link></li>
-                                </ul>
+                            <li>
+                                <Link
+                                    to="/pemerintahan/struktur"
+                                    className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm"
+                                >
+                                    Struktur Organisasi
+                                </Link>
                             </li>
                             <li><Link to="/berita" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Berita</Link></li>
                             <li><Link to="/profil-desa" className="text-white hover:text-green-100 hover:bg-white/10 px-3 py-2 rounded-md transition-all duration-200 font-medium text-sm">Buku Profil Desa</Link></li>
@@ -101,7 +98,6 @@ const Header = () => {
                             <li><Link to="/" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Beranda</Link></li>
                             <li><Link to="/about" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Profil Desa</Link></li>
                             <li><Link to="/pemerintahan/struktur" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Struktur Organisasi</Link></li>
-                            <li><Link to="/pemerintahan/aparatur" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Aparatur Desa</Link></li>
                             <li><Link to="/berita" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Berita</Link></li>
                             <li><Link to="/profil-desa" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Buku Profil Desa</Link></li>
                             <li><Link to="/galeri" className="block py-3 px-4 text-white hover:bg-white/20 rounded-md transition-colors text-sm font-medium" onClick={toggleMenu}>Galeri</Link></li>

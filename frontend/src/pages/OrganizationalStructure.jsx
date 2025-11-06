@@ -1,7 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icon, FaUser } from '../components/Icons';
 
 const OrganizationalStructure = () => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [visibleSections, setVisibleSections] = useState({
+        header: false,
+        kepalaDesa: false,
+        sekretaris: false,
+        kaur: false,
+        kasi: false,
+        kadus: false,
+        footer: false
+    });
+
+    useEffect(() => {
+        // Trigger loading animation sequence
+        const loadingSequence = async () => {
+            setIsLoaded(true);
+            
+            // Animate sections in sequence with delays
+            const delays = [
+                { section: 'header', delay: 200 },
+                { section: 'kepalaDesa', delay: 600 },
+                { section: 'sekretaris', delay: 1000 },
+                { section: 'kaur', delay: 1400 },
+                { section: 'kasi', delay: 1800 },
+                { section: 'kadus', delay: 2200 },
+                { section: 'footer', delay: 2600 }
+            ];
+
+            delays.forEach(({ section, delay }) => {
+                setTimeout(() => {
+                    setVisibleSections(prev => ({ ...prev, [section]: true }));
+                }, delay);
+            });
+        };
+
+        loadingSequence();
+    }, []);
     // Struktur data berdasarkan hierarki organisasi
     const organizationData = {
         kepalaDesa: {
@@ -159,7 +195,11 @@ const OrganizationalStructure = () => {
         <div className="min-h-screen bg-gray-50 py-8 sm:py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="text-center mb-12 sm:mb-16">
+                <div className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${
+                    visibleSections.header 
+                        ? 'opacity-100 translate-y-0' 
+                        : 'opacity-0 translate-y-8'
+                }`}>
                     <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
                         Struktur Organisasi
                     </h1>
@@ -173,29 +213,55 @@ const OrganizationalStructure = () => {
                 <div className="space-y-6 sm:space-y-8">
 
                     {/* Level 1: Kepala Desa */}
-                    <div className="flex justify-center">
+                    <div className={`flex justify-center transition-all duration-1000 delay-300 ${
+                        visibleSections.kepalaDesa 
+                            ? 'opacity-100 translate-y-0 scale-100' 
+                            : 'opacity-0 translate-y-12 scale-95'
+                    }`}>
                         <ProfileCard official={organizationData.kepalaDesa} size="large" />
                     </div>
 
                     {/* Connecting line */}
-                    <ConnectingLine />
+                    <div className={`transition-all duration-700 delay-500 ${
+                        visibleSections.kepalaDesa ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0'
+                    }`}>
+                        <ConnectingLine />
+                    </div>
 
                     {/* Level 2: Sekretaris Desa */}
-                    <div className="flex justify-center">
+                    <div className={`flex justify-center transition-all duration-1000 delay-700 ${
+                        visibleSections.sekretaris 
+                            ? 'opacity-100 translate-y-0 scale-100' 
+                            : 'opacity-0 translate-y-12 scale-95'
+                    }`}>
                         <ProfileCard official={organizationData.sekretarisDesa} size="normal" />
                     </div>
 
                     {/* Connecting line */}
-                    <ConnectingLine />
+                    <div className={`transition-all duration-700 delay-900 ${
+                        visibleSections.sekretaris ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0'
+                    }`}>
+                        <ConnectingLine />
+                    </div>
 
                     {/* Level 3: Kepala Urusan */}
-                    <div className="relative">
+                    <div className={`relative transition-all duration-1000 delay-1000 ${
+                        visibleSections.kaur 
+                            ? 'opacity-100 translate-y-0' 
+                            : 'opacity-0 translate-y-12'
+                    }`}>
                         {/* Horizontal connecting lines - Hidden on mobile */}
                         <div className="hidden md:block absolute top-0 left-1/2 transform -translate-x-1/2 w-3/4 h-0.5 bg-desa-green-400"></div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center pt-6 sm:pt-8">
                             {organizationData.kaur.map((official, index) => (
-                                <div key={index} className="relative">
+                                <div key={index} className={`relative transition-all duration-800 ${
+                                    visibleSections.kaur 
+                                        ? 'opacity-100 translate-y-0 scale-100' 
+                                        : 'opacity-0 translate-y-8 scale-95'
+                                }`} style={{ 
+                                    transitionDelay: visibleSections.kaur ? `${1200 + index * 200}ms` : '0ms' 
+                                }}>
                                     {/* Vertical line from horizontal line to card - Hidden on mobile */}
                                     <div className="hidden md:block absolute top-0 left-1/2 transform -translate-x-1/2 w-0.5 h-8 bg-desa-green-400 -mt-8"></div>
                                     <ProfileCard official={official} size="normal" />
@@ -205,16 +271,30 @@ const OrganizationalStructure = () => {
                     </div>
 
                     {/* Connecting line */}
-                    <ConnectingLine length="6rem" />
+                    <div className={`transition-all duration-700 delay-1500 ${
+                        visibleSections.kaur ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0'
+                    }`}>
+                        <ConnectingLine length="6rem" />
+                    </div>
 
                     {/* Level 4: Kepala Seksi */}
-                    <div className="relative">
+                    <div className={`relative transition-all duration-1000 delay-1300 ${
+                        visibleSections.kasi 
+                            ? 'opacity-100 translate-y-0' 
+                            : 'opacity-0 translate-y-12'
+                    }`}>
                         {/* Horizontal connecting lines - Hidden on mobile */}
                         <div className="hidden md:block absolute top-0 left-1/2 transform -translate-x-1/2 w-2/3 h-0.5 bg-desa-green-400"></div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 justify-items-center pt-6 sm:pt-8">
                             {organizationData.kasi.map((official, index) => (
-                                <div key={index} className="relative">
+                                <div key={index} className={`relative transition-all duration-800 ${
+                                    visibleSections.kasi 
+                                        ? 'opacity-100 translate-y-0 scale-100' 
+                                        : 'opacity-0 translate-y-8 scale-95'
+                                }`} style={{ 
+                                    transitionDelay: visibleSections.kasi ? `${1500 + index * 200}ms` : '0ms' 
+                                }}>
                                     {/* Vertical line from horizontal line to card - Hidden on mobile */}
                                     <div className="hidden md:block absolute top-0 left-1/2 transform -translate-x-1/2 w-0.5 h-8 bg-desa-green-400 -mt-8"></div>
                                     <ProfileCard official={official} size="normal" />
@@ -224,16 +304,30 @@ const OrganizationalStructure = () => {
                     </div>
 
                     {/* Connecting line */}
-                    <ConnectingLine length="6rem" />
+                    <div className={`transition-all duration-700 delay-1800 ${
+                        visibleSections.kasi ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0'
+                    }`}>
+                        <ConnectingLine length="6rem" />
+                    </div>
 
                     {/* Level 5: Kepala Dusun */}
-                    <div className="relative">
+                    <div className={`relative transition-all duration-1000 delay-1600 ${
+                        visibleSections.kadus 
+                            ? 'opacity-100 translate-y-0' 
+                            : 'opacity-0 translate-y-12'
+                    }`}>
                         {/* Horizontal connecting lines - Hidden on mobile */}
                         <div className="hidden lg:block absolute top-0 left-1/2 transform -translate-x-1/2 w-5/6 h-0.5 bg-desa-green-400"></div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 justify-items-center pt-6 sm:pt-8">
                             {organizationData.kadus.map((official, index) => (
-                                <div key={index} className="relative">
+                                <div key={index} className={`relative transition-all duration-800 ${
+                                    visibleSections.kadus 
+                                        ? 'opacity-100 translate-y-0 scale-100' 
+                                        : 'opacity-0 translate-y-8 scale-95'
+                                }`} style={{ 
+                                    transitionDelay: visibleSections.kadus ? `${2000 + index * 150}ms` : '0ms' 
+                                }}>
                                     {/* Vertical line from horizontal line to card - Hidden on mobile */}
                                     <div className="hidden lg:block absolute top-0 left-1/2 transform -translate-x-1/2 w-0.5 h-8 bg-desa-green-400 -mt-8"></div>
                                     <ProfileCard official={official} size="small" />
@@ -244,8 +338,12 @@ const OrganizationalStructure = () => {
                 </div>
 
                 {/* Footer info */}
-                <div className="mt-12 sm:mt-16 text-center px-4">
-                    <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 max-w-2xl mx-auto">
+                <div className={`mt-12 sm:mt-16 text-center px-4 transition-all duration-1000 ${
+                    visibleSections.footer 
+                        ? 'opacity-100 translate-y-0' 
+                        : 'opacity-0 translate-y-8'
+                }`}>
+                    <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 max-w-2xl mx-auto transform transition-all duration-700 hover:shadow-lg hover:scale-105">
                         <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
                             Informasi Struktur Organisasi
                         </h3>

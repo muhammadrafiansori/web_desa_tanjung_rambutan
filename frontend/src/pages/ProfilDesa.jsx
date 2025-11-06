@@ -15,37 +15,86 @@ import {
 
 const ProfilDesa = () => {
     const [downloadCount, setDownloadCount] = useState(1247); // Mock counter
+    const [selectedDocument, setSelectedDocument] = useState(0); // Index of selected document
+    const [imageError, setImageError] = useState(false); // Track image loading error
 
-    // Data buku profil desa
-    const bukuProfil = {
-        title: "Profil Desa Tanjung Rambutan",
-        subtitle: "Edisi Tahun 2024",
-        version: "1.0",
-        yearPublished: 2024,
-        fileSize: "5.2 MB",
-        pageCount: 52,
-        lastUpdated: "2024-10-15",
-        pdfUrl: "/documents/profil-desa-2024.pdf",
-        coverImage: "/images/book-cover.png", // Book cover dalam format PNG
-        description: "Buku profil resmi yang memuat informasi lengkap mengenai Desa Tanjung Rambutan, meliputi sejarah, visi misi, data demografis, potensi desa, struktur pemerintahan, dan program pembangunan terkini.",
-        tableOfContents: [
-            "Kata Pengantar Kepala Desa",
-            "Sejarah dan Latar Belakang Desa",
-            "Visi, Misi, dan Tujuan Pembangunan",
-            "Kondisi Geografis dan Administratif",
-            "Data Kependudukan dan Demografi",
-            "Struktur Pemerintahan Desa",
-            "Potensi dan Sumber Daya Desa",
-            "Program Pembangunan dan Prestasi",
-            "Layanan Publik dan Fasilitas Desa",
-            "Galeri Foto Kegiatan dan Prestasi",
-            "Rencana Pembangunan ke Depan"
-        ]
-    };
+    // Data dokumen PDF yang tersedia
+    const documents = [
+        {
+            id: 1,
+            title: "Profil Desa Tanjung Rambutan",
+            subtitle: "Edisi Tahun 2024",
+            version: "1.0",
+            yearPublished: 2024,
+            fileSize: "5.2 MB",
+            pageCount: 52,
+            lastUpdated: "2024-10-15",
+            pdfUrl: "/documents/profil-desa-2024.pdf",
+            coverImage: "/images/book-cover.png",
+            category: "Profil Desa",
+            description: "Buku profil resmi yang memuat informasi lengkap mengenai Desa Tanjung Rambutan, meliputi sejarah, visi misi, data demografis, potensi desa, struktur pemerintahan, dan program pembangunan terkini.",
+            tableOfContents: [
+                "Kata Pengantar Kepala Desa",
+                "Sejarah dan Latar Belakang Desa",
+                "Visi, Misi, dan Tujuan Pembangunan",
+                "Kondisi Geografis dan Administratif",
+                "Data Kependudukan dan Demografi",
+                "Struktur Pemerintahan Desa",
+                "Potensi dan Sumber Daya Desa",
+                "Program Pembangunan dan Prestasi",
+                "Layanan Publik dan Fasilitas Desa",
+                "Galeri Foto Kegiatan dan Prestasi",
+                "Rencana Pembangunan ke Depan"
+            ]
+        },
+        {
+            id: 2,
+            title: "Produk Hukum Desa",
+            subtitle: "Peraturan dan Keputusan Desa",
+            version: "2.0",
+            yearPublished: 2024,
+            fileSize: "3.8 MB",
+            pageCount: 38,
+            lastUpdated: "2024-09-20",
+            pdfUrl: "/documents/PRODUK-HUKUM-TJ-RAMBUTAN.pdf",
+            coverImage: "/images/book-cover-hukum.png", // Updated image path
+            category: "Hukum",
+            description: "Kumpulan produk hukum desa meliputi peraturan desa, keputusan kepala desa, dan regulasi yang berlaku di Desa Tanjung Rambutan.",
+            tableOfContents: [
+                "Peraturan Desa tentang APBDes",
+                "Peraturan Desa tentang Organisasi Pemerintahan",
+                "Keputusan Kepala Desa tentang Pengangkatan Perangkat",
+                "Peraturan tentang Retribusi Desa",
+                "Keputusan tentang Tim Pelaksana Kegiatan",
+                "Peraturan tentang Badan Permusyawaratan Desa"
+            ]
+        }
+    ];
+
+    // Get current selected document
+    const bukuProfil = documents[selectedDocument];
 
     useEffect(() => {
         document.title = 'Buku Profil Desa - Desa Tanjung Rambutan';
     }, []);
+
+    // Reset image error state when document changes
+    useEffect(() => {
+        console.log('Document changed to:', selectedDocument, 'Reset imageError to false');
+        setImageError(false);
+    }, [selectedDocument]);
+
+    // Handle image load success
+    const handleImageLoad = () => {
+        console.log('Image loaded successfully for:', bukuProfil.title);
+        setImageError(false);
+    };
+
+    // Handle image load error
+    const handleImageError = () => {
+        console.log('Image failed to load for:', bukuProfil.title, 'Cover path:', bukuProfil.coverImage);
+        setImageError(true);
+    };
 
     const handleDownload = async () => {
         try {
@@ -99,8 +148,52 @@ const ProfilDesa = () => {
                 </div>
             </div>
 
+            {/* Document Selection */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Koleksi Dokumen Desa</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {documents.map((doc, index) => (
+                            <div
+                                key={doc.id}
+                                onClick={() => setSelectedDocument(index)}
+                                className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 ${
+                                    selectedDocument === index
+                                        ? 'border-desa-green-500 bg-desa-green-50'
+                                        : 'border-gray-200 hover:border-desa-green-300 hover:bg-gray-50'
+                                }`}
+                            >
+                                <div className="flex items-start space-x-3">
+                                    <div className={`p-2 rounded-lg ${
+                                        doc.category === 'Profil Desa' ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'
+                                    }`}>
+                                        <Icon icon={FaFilePdf} size="lg" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">
+                                            {doc.title}
+                                        </h3>
+                                        <p className="text-sm text-gray-600 mt-1">{doc.subtitle}</p>
+                                        <div className="flex items-center justify-between mt-3">
+                                            <span className={`px-2 py-1 text-xs rounded-full ${
+                                                doc.category === 'Profil Desa' 
+                                                    ? 'bg-blue-100 text-blue-700' 
+                                                    : 'bg-orange-100 text-orange-700'
+                                            }`}>
+                                                {doc.category}
+                                            </span>
+                                            <span className="text-xs text-gray-500">{doc.fileSize}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                     {/* Book Preview Section */}
@@ -108,29 +201,30 @@ const ProfilDesa = () => {
                         <div className="bg-white rounded-xl shadow-lg p-6 sticky top-8">
                             {/* Book Cover */}
                             <div className="aspect-[3/4] rounded-lg mb-6 overflow-hidden border-2 border-desa-green-300 shadow-md">
-                                <img
-                                    src={bukuProfil.coverImage}
-                                    alt={`Cover ${bukuProfil.title}`}
-                                    className="w-full h-full object-cover"
-                                    onError={(e) => {
-                                        // Fallback to placeholder if image fails to load
-                                        e.target.style.display = 'none';
-                                        e.target.nextSibling.style.display = 'flex';
-                                    }}
-                                />
-                                {/* Fallback placeholder */}
-                                <div
-                                    className="w-full h-full bg-gradient-to-br from-desa-green-100 to-desa-green-200 flex flex-col items-center justify-center"
-                                    style={{ display: 'none' }}
-                                >
-                                    <Icon icon={FaBook} size="3xl" className="text-desa-green-600 mb-4" />
-                                    <h3 className="text-lg font-bold text-desa-green-800 text-center px-4">
-                                        {bukuProfil.title}
-                                    </h3>
-                                    <p className="text-sm text-desa-green-600 mt-2">
-                                        {bukuProfil.subtitle}
-                                    </p>
-                                </div>
+                                {!imageError ? (
+                                    <img
+                                        key={`${bukuProfil.id}-${selectedDocument}`} // Force re-render when document changes
+                                        src={bukuProfil.coverImage}
+                                        alt={`Cover ${bukuProfil.title}`}
+                                        className="w-full h-full object-cover transition-opacity duration-300"
+                                        onError={handleImageError}
+                                        onLoad={handleImageLoad}
+                                    />
+                                ) : (
+                                    /* Fallback placeholder */
+                                    <div 
+                                        key={`placeholder-${bukuProfil.id}-${selectedDocument}`}
+                                        className="w-full h-full bg-gradient-to-br from-desa-green-100 to-desa-green-200 flex flex-col items-center justify-center animate-fadeIn"
+                                    >
+                                        <Icon icon={FaBook} size="3xl" className="text-desa-green-600 mb-4" />
+                                        <h3 className="text-lg font-bold text-desa-green-800 text-center px-4">
+                                            {bukuProfil.title}
+                                        </h3>
+                                        <p className="text-sm text-desa-green-600 mt-2 text-center px-2">
+                                            {bukuProfil.subtitle}
+                                        </p>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Book Info */}

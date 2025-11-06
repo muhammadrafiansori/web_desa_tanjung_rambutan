@@ -13,6 +13,7 @@ import Berita from './pages/Berita'; // Import Berita page
 import BeritaDetail from './pages/BeritaDetail'; // Import BeritaDetail page
 import ProfilDesa from './pages/ProfilDesa'; // Import ProfilDesa page
 import Gallery from './pages/Gallery'; // Import Gallery page
+import Contact from './pages/Contact'; // Import Contact page
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/berita/:slug" element={<BeritaDetail />} /> {/* Route for Berita detail page */}
             <Route path="/profil-desa" element={<ProfilDesa />} /> {/* Route for Profil Desa page */}
             <Route path="/galeri" element={<Gallery />} /> {/* Route for Gallery page */}
+            <Route path="/kontak" element={<Contact />} /> {/* Route for Contact page */}
             {/* Tambahkan route lain di sini nanti */}
           </Routes>
         </main>

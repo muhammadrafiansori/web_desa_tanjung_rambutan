@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cover Generator</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        .cover { 
+            width: 600px; 
+            height: 800px; 
+            background: linear-gradient(135deg, #065f46 0%, #047857 50%, #059669 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 60px 40px;
+            box-sizing: border-box;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='m0 40l40-40h-40v40zm40 0v-40h-40l40 40z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+        }
+        .header { text-align: center; z-index: 1; }
+        .logo { font-size: 48px; margin-bottom: 20px; }
+        .title { 
+            font-size: 36px; 
+            font-weight: bold; 
+            margin-bottom: 16px; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+        .subtitle { 
+            font-size: 18px; 
+            opacity: 0.9; 
+            margin-bottom: 40px;
+        }
+        .footer { 
+            text-align: center; 
+            z-index: 1;
+        }
+        .footer .village { 
+            font-size: 24px; 
+            font-weight: bold; 
+            margin-bottom: 8px;
+        }
+        .footer .location { 
+            font-size: 16px; 
+            opacity: 0.8;
+        }
+        .cover.hukum {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #f87171 100%);
+        }
+        .ornament {
+            position: absolute;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+        }
+        .ornament.top-left { top: 20px; left: 20px; width: 100px; height: 100px; }
+        .ornament.bottom-right { bottom: 20px; right: 20px; width: 80px; height: 80px; }
+    </style>
+</head>
+<body>
+
+<!-- Cover untuk Profil Desa -->
+<div class="cover" id="profil-cover">
+    <div class="ornament top-left"></div>
+    
+    <div class="header">
+        <div class="logo">📖</div>
+        <div class="title">PROFIL DESA<br>TANJUNG RAMBUTAN</div>
+        <div class="subtitle">Edisi Tahun 2024</div>
+    </div>
+    
+    <div class="footer">
+        <div class="village">DESA TANJUNG RAMBUTAN</div>
+        <div class="location">Kecamatan Kampar Kiri, Kabupaten Kampar<br>Provinsi Riau</div>
+    </div>
+    
+    <div class="ornament bottom-right"></div>
+</div>
+
+<br><br>
+
+<!-- Cover untuk Produk Hukum -->
+<div class="cover hukum" id="hukum-cover">
+    <div class="ornament top-left"></div>
+    
+    <div class="header">
+        <div class="logo">⚖️</div>
+        <div class="title">PRODUK HUKUM<br>DESA</div>
+        <div class="subtitle">Peraturan dan Keputusan Desa</div>
+    </div>
+    
+    <div class="footer">
+        <div class="village">DESA TANJUNG RAMBUTAN</div>
+        <div class="location">Kecamatan Kampar Kiri, Kabupaten Kampar<br>Provinsi Riau</div>
+    </div>
+    
+    <div class="ornament bottom-right"></div>
+</div>
+
+<script>
+// Instructions: 
+// 1. Take screenshot of each cover
+// 2. Save as book-cover.png and book-cover-hukum.png
+// 3. Place in frontend/public/images/ folder
+console.log("Use browser developer tools to take screenshots of each cover");
+</script>
+
+</body>
+</html>

@@ -48,6 +48,22 @@
     @apply bg-white text-desa-green-600 border-2 border-desa-green-600 hover:bg-desa-green-50 font-semibold py-3 px-6 rounded-lg transition-all duration-300;
   }
 
+  /* Animation classes */
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* Card styles */
   .card {
     @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;

@@ -4,6 +4,30 @@ import api from '../services/api';
 
 const Home = () => {
     const navigate = useNavigate();
+    
+    // Hero background slideshow
+    const heroImages = [
+        'images/gallery/pemandangan-1.jpg',
+        'images/gallery/kegiatan-3.jpg',
+        'images/gallery/kegiatan-2.jpg',
+        'images/gallery/kantor-1.jpg',
+        'images/gallery/pemandangan-2.jpg'
+        
+    ];
+    
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    
+    // Auto slide effect
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => 
+                prevIndex === heroImages.length - 1 ? 0 : prevIndex + 1
+            );
+        }, 4000); // Change image every 4 seconds
+
+        return () => clearInterval(interval);
+    }, [heroImages.length]);
+    
     // Initialize with static fallback data for faster loading
     const [latestNews, setLatestNews] = useState([
         {
@@ -11,7 +35,7 @@ const Home = () => {
             title: "Website Desa Tanjung Rambutan Diluncurkan",
             excerpt: "Website resmi Desa Tanjung Rambutan kini telah diluncurkan untuk memberikan informasi terkini kepada masyarakat.",
             date: "2024-10-28",
-            image: "/default-news.jpg",
+            image: "/images/gallery/kantor-1.jpg",
             slug: "website-desa-diluncurkan"
         },
         {
@@ -19,7 +43,7 @@ const Home = () => {
             title: "Program Pembangunan Infrastruktur Desa",
             excerpt: "Pembangunan jalan dan fasilitas umum terus dilakukan untuk meningkatkan kesejahteraan masyarakat.",
             date: "2024-10-25",
-            image: "/default-news.jpg",
+            image: "/images/gallery/kegiatan-2.jpg",
             slug: "program-pembangunan-infrastruktur"
         },
         {
@@ -27,26 +51,27 @@ const Home = () => {
             title: "Kegiatan Posyandu Rutin Bulan Oktober",
             excerpt: "Posyandu rutin dilaksanakan setiap bulan untuk memantau kesehatan ibu dan anak.",
             date: "2024-10-20",
-            image: "/default-news.jpg",
+            image: "/images/gallery/kegiatan-3.jpg",
             slug: "kegiatan-posyandu-oktober"
-        }
-    ]);
-    const [announcements, setAnnouncements] = useState([
-        {
-            id: 1,
-            title: "Pengumuman Jadwal Pelayanan Administrasi",
-            content: "Pelayanan administrasi desa buka setiap hari Senin-Jumat pukul 08.00-15.00 WIB.",
-            date: "2024-10-28",
-            urgent: true
         },
         {
-            id: 2,
-            title: "Himbauan Keamanan dan Ketertiban",
-            content: "Masyarakat diimbau untuk selalu menjaga keamanan lingkungan dan melaporkan hal-hal mencurigakan.",
-            date: "2024-10-25",
-            urgent: false
+            id: 4,
+            title: "Gotong Royong Pembersihan Lingkungan Desa",
+            excerpt: "Masyarakat Desa Tanjung Rambutan bergotong royong membersihkan lingkungan untuk menjaga kebersihan dan kesehatan bersama.",
+            date: "2024-10-15",
+            image: "/images/gallery/kegiatan-1.jpg",
+            slug: "gotong-royong-pembersihan"
+        },
+        {
+            id: 5,
+            title: "Rapat Koordinasi Perangkat Desa",
+            excerpt: "Rapat bulanan perangkat desa membahas program kerja dan evaluasi pelaksanaan kegiatan desa.",
+            date: "2024-10-10",
+            image: "/images/gallery/kantor-2.jpg",
+            slug: "rapat-koordinasi-perangkat"
         }
     ]);
+
     const [desaStats, setDesaStats] = useState({
         total_penduduk: 2847,
         total_kk: 892,
@@ -61,9 +86,9 @@ const Home = () => {
                  <p>Selamat datang di website resmi Desa Tanjung Rambutan. Kami berkomitmen untuk memberikan pelayanan terbaik kepada masyarakat dan membangun desa yang maju, mandiri, dan sejahtera.</p>
                  <p>Melalui website ini, kami berharap dapat meningkatkan transparansi dan komunikasi dengan seluruh masyarakat desa. Mari bersama-sama membangun Tanjung Rambutan yang lebih baik.</p>
                  <p>Wassalamualaikum warahmatullahi wabarakatuh.</p>`,
-        kepala_desa: 'H. Ahmad Rahman',
+        kepala_desa: 'DEDI WAHYUDI, SE.MM',
         jabatan: 'Kepala Desa Tanjung Rambutan',
-        foto_kepala_desa: null,
+        foto_kepala_desa: '/foto/DediWahyudi.jpg',
         date: new Date().toISOString()
     });
     const [loading, setLoading] = useState(false); // Changed to false for immediate display
@@ -83,9 +108,8 @@ const Home = () => {
             console.log('API_URL from env:', import.meta.env.VITE_WP_API_URL);
 
             // Load data parallel untuk performance yang lebih baik
-            const [postsData, pengumumanData, statsData, kataSambutanData] = await Promise.allSettled([
-                api.getPosts(1, 3), // Get latest 3 posts
-                api.getPengumuman(3), // Get latest 3 announcements
+            const [postsData, statsData, kataSambutanData] = await Promise.allSettled([
+                api.getPosts(1, 5), // Get latest 5 posts
                 api.getDesaStats(),
                 api.getKataSambutan() // Get kata sambutan kepala desa
             ]);
@@ -104,12 +128,22 @@ const Home = () => {
                         fallbackUsed: !featuredImageUrl
                     });
 
+                    // Array foto lokal untuk fallback
+                    const localImages = [
+                        '/images/gallery/kantor-1.jpg',
+                        '/images/gallery/kegiatan-2.jpg',
+                        '/images/gallery/kegiatan-3.jpg',
+                        '/images/gallery/kantor-2.jpg',
+                        '/images/gallery/kegiatan-1.jpg',
+                        '/images/gallery/pemandangan-1.jpg'
+                    ];
+
                     return {
                         id: post.id,
                         title: post.title.rendered,
                         excerpt: api.createExcerpt(post.content.rendered, 120),
                         date: post.date,
-                        image: featuredImageUrl || `https://picsum.photos/800/400?random=${post.id}`,
+                        image: featuredImageUrl || localImages[post.id % localImages.length],
                         slug: post.slug
                     };
                 });
@@ -117,23 +151,6 @@ const Home = () => {
                 console.log('📋 Processed posts:', posts);
             } else {
                 console.log('❌ Posts API failed, keeping initial data:', postsData.reason);
-            }
-
-            // Handle announcements data - only update if successful
-            console.log('📢 Pengumuman API result:', pengumumanData);
-            if (pengumumanData.status === 'fulfilled') {
-                const announcements = pengumumanData.value.map(announcement => ({
-                    id: announcement.id,
-                    title: announcement.title.rendered,
-                    content: announcement.content?.rendered || announcement.excerpt?.rendered || '',
-                    date: announcement.date,
-                    slug: announcement.slug,
-                    urgent: false
-                }));
-                setAnnouncements(announcements);
-                console.log('✅ Pengumuman API success:', announcements);
-            } else {
-                console.log('❌ Pengumuman API failed, keeping initial data:', pengumumanData.reason);
             }
 
             // Handle stats data - only update if successful
@@ -177,10 +194,27 @@ const Home = () => {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <section className="relative h-screen bg-gradient-to-br from-desa-green-600 via-desa-green-500 to-desa-green-700 flex items-center justify-center text-white overflow-hidden">
-                {/* Background Pattern */}
-                <div className="absolute inset-0 bg-black bg-opacity-30"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-desa-green-600/20 to-transparent"></div>
+            <section className="relative h-screen flex items-center justify-center text-white overflow-hidden">
+                {/* Background Slideshow */}
+                <div className="absolute inset-0">
+                    {heroImages.map((image, index) => (
+                        <div
+                            key={index}
+                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                                index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+                            }`}
+                            style={{
+                                backgroundImage: `url(${image})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat'
+                            }}
+                        />
+                    ))}
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-desa-green-600/30 to-transparent"></div>
+                </div>
 
                 <div className="relative z-10 max-w-6xl mx-auto px-5 text-center">
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-shadow-lg">
@@ -193,7 +227,7 @@ const Home = () => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
-                            href="/profil"
+                            href="/about"
                             className="bg-white text-desa-green-600 hover:bg-desa-green-50 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:-translate-y-1 shadow-lg"
                         >
                             Profil Desa
@@ -207,6 +241,39 @@ const Home = () => {
                     </div>
                 </div>
 
+                {/* Slideshow Indicators */}
+                <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    {heroImages.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentImageIndex(index)}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                                index === currentImageIndex 
+                                    ? 'bg-white scale-110' 
+                                    : 'bg-white/50 hover:bg-white/75'
+                            }`}
+                        />
+                    ))}
+                </div>
+
+                {/* Navigation Arrows */}
+                <button 
+                    onClick={() => setCurrentImageIndex(currentImageIndex === 0 ? heroImages.length - 1 : currentImageIndex - 1)}
+                    className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button 
+                    onClick={() => setCurrentImageIndex(currentImageIndex === heroImages.length - 1 ? 0 : currentImageIndex + 1)}
+                    className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+
                 {/* Scroll Indicator */}
                 <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -217,38 +284,6 @@ const Home = () => {
 
             {/* Kata Sambutan Kepala Desa */}
 
-
-            {/* Stats Section */}
-            <section className="bg-white py-20 mt-16 relative z-20">
-                <div className="max-w-6xl mx-auto px-5">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
-                        <div className="bg-white text-center p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
-                            <div className="text-3xl lg:text-4xl font-bold text-desa-green-600 mb-2">
-                                {desaStats.jumlah_penduduk?.toLocaleString()}
-                            </div>
-                            <div className="text-gray-600 font-medium">Jiwa Penduduk</div>
-                        </div>
-                        <div className="bg-white text-center p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
-                            <div className="text-3xl lg:text-4xl font-bold text-desa-green-600 mb-2">
-                                {desaStats.jumlah_kk?.toLocaleString()}
-                            </div>
-                            <div className="text-gray-600 font-medium">Kepala Keluarga</div>
-                        </div>
-                        <div className="bg-white text-center p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
-                            <div className="text-3xl lg:text-4xl font-bold text-desa-green-600 mb-2">
-                                {desaStats.luas_wilayah} Km²
-                            </div>
-                            <div className="text-gray-600 font-medium">Luas Wilayah</div>
-                        </div>
-                        <div className="bg-white text-center p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
-                            <div className="text-3xl lg:text-4xl font-bold text-desa-green-600 mb-2">
-                                {desaStats.jumlah_rt}
-                            </div>
-                            <div className="text-gray-600 font-medium">RT</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* Kata Sambutan Kepala Desa Section */}
             {kataSambutan && (
@@ -469,7 +504,7 @@ const Home = () => {
             </section>
 
             {/* Lokasi & Kontak Section */}
-            <section className="bg-gray-50 py-20">
+            <section className="bg-gradient-to-br from-gray-50 to-white py-20">
                 <div className="max-w-6xl mx-auto px-5">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -491,9 +526,10 @@ const Home = () => {
                                     <div>
                                         <h4 className="font-semibold text-gray-900 mb-2">Alamat</h4>
                                         <p className="text-gray-600 leading-relaxed">
-                                            Jl. Raya Tanjung Rambutan<br />
-                                            Kec. Kampar Kiri, Kab. Kampar<br />
-                                            Provinsi Riau 28461
+                                            Jln Kemuning Desa Tanjung Rambutan<br />
+                                            Kecamatan Kampar, Kabupaten Kampar<br />
+                                            Provinsi Riau<br />
+                                            Kode Pos 28461
                                         </p>
                                     </div>
 
@@ -501,17 +537,19 @@ const Home = () => {
                                     <div>
                                         <h4 className="font-semibold text-gray-900 mb-3">Hubungi Kami</h4>
                                         <div className="space-y-2">
-                                            <a href="tel:+62761123456" className="flex items-center text-gray-600 hover:text-desa-green-600 transition-colors">
+                                            <a href="tel:+6285267556489" className="flex items-center text-gray-600 hover:text-desa-green-600 transition-colors">
                                                 <span className="w-5 h-5 mr-3 text-gray-400">📞</span>
-                                                (0761) 123-456
+                                                <div>
+                                                    <div>+62 852-6755-6489</div>
+                                                    <div className="text-xs text-gray-500">(Kepala Desa)</div>
+                                                </div>
                                             </a>
-                                            <a href="https://wa.me/628123456789" className="flex items-center text-gray-600 hover:text-green-600 transition-colors">
-                                                <span className="w-5 h-5 mr-3 text-gray-400">💬</span>
-                                                +62 812-3456-789
-                                            </a>
-                                            <a href="mailto:info@desatanjungrambutan.id" className="flex items-center text-gray-600 hover:text-blue-600 transition-colors">
-                                                <span className="w-5 h-5 mr-3 text-gray-400">✉️</span>
-                                                info@desatanjungrambutan.id
+                                            <a href="tel:+6285355740112" className="flex items-center text-gray-600 hover:text-desa-green-600 transition-colors">
+                                                <span className="w-5 h-5 mr-3 text-gray-400">�</span>
+                                                <div>
+                                                    <div>+62 853-5574-0112</div>
+                                                    <div className="text-xs text-gray-500">(Sekretaris Desa)</div>
+                                                </div>
                                             </a>
                                         </div>
                                     </div>
@@ -522,14 +560,10 @@ const Home = () => {
                                         <div className="text-gray-600 space-y-1 text-sm">
                                             <div className="flex justify-between">
                                                 <span>Senin - Jumat</span>
-                                                <span>08:00 - 16:00</span>
-                                            </div>
-                                            <div className="flex justify-between">
-                                                <span>Sabtu</span>
-                                                <span>08:00 - 12:00</span>
+                                                <span>08:00 - 15:30</span>
                                             </div>
                                             <div className="flex justify-between text-red-600">
-                                                <span>Minggu & Libur</span>
+                                                <span>Sabtu, Minggu & Hari Libur</span>
                                                 <span>Tutup</span>
                                             </div>
                                         </div>
@@ -546,11 +580,11 @@ const Home = () => {
                                             Buka di Google Maps
                                         </a>
                                         <a
-                                            href="https://wa.me/628123456789"
+                                            href="https://wa.me/6285267556489"
                                             target="_blank"
                                             className="block w-full bg-green-500 text-white text-center py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
                                         >
-                                            Chat WhatsApp
+                                            Chat WhatsApp Kepala Desa
                                         </a>
                                     </div>
                                 </div>
@@ -573,227 +607,171 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* Additional Info */}
-                    <div className="mt-8 grid md:grid-cols-3 gap-4 text-center">
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
-                            <div className="text-2xl font-bold text-desa-green-600 mb-1">08:00</div>
-                            <div className="text-sm text-gray-600">Jam Buka Layanan</div>
-                        </div>
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
-                            <div className="text-2xl font-bold text-desa-green-600 mb-1">24/7</div>
-                            <div className="text-sm text-gray-600">WhatsApp Support</div>
-                        </div>
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
-                            <div className="text-2xl font-bold text-desa-green-600 mb-1">Free</div>
-                            <div className="text-sm text-gray-600">Parkir Tersedia</div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
             {/* Berita Terkini Section */}
-            <section className="bg-gray-50 py-20">
-                <div className="max-w-6xl mx-auto px-5">
+            <section className="bg-white py-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Header Section */}
                     <div className="text-center mb-16">
-                        <div className="inline-flex items-center gap-3 bg-desa-green-100 text-desa-green-600 px-6 py-2 rounded-full font-medium mb-4">
-                            📰 Informasi Terkini
+                        <div className="inline-flex items-center gap-3 mb-4">
+                            <div className="w-8 h-8 bg-desa-green-600 rounded-lg flex items-center justify-center">
+                                <span className="text-white text-lg">📰</span>
+                            </div>
+                            <h2 className="text-3xl md:text-4xl font-bold text-desa-green-600">
+                                Berita Terkini Desa
+                            </h2>
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-desa-green-600 mb-4">
-                            Berita & Pengumuman Desa
-                        </h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                            Dapatkan informasi terbaru mengenai kegiatan, program, dan pengumuman penting dari Desa Tanjung Rambutan
+                        <div className="w-24 h-1 bg-gradient-to-r from-desa-green-500 to-desa-green-300 mx-auto mb-6"></div>
+                        <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
+                            Dapatkan informasi terbaru mengenai kegiatan, program, dan perkembangan terkini dari Desa Tanjung Rambutan
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* Featured News */}
-                        <div className="lg:col-span-2">
+                    {/* Featured News (First Item) */}
+                    {latestNews.length > 0 && (
+                        <div className="mb-12">
+                            <article className="group bg-gradient-to-br from-white to-gray-50 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100">
+                                <div className="lg:grid lg:grid-cols-5 lg:gap-8">
+                                    <div className="lg:col-span-2 h-64 lg:h-96 overflow-hidden relative">
+                                        <img
+                                            src={latestNews[0].image}
+                                            alt={latestNews[0].title}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                        />
+                                        <div className="absolute top-4 left-4">
+                                            <div className="inline-flex items-center gap-2 bg-desa-green-600/90 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium">
+                                                <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                                                BERITA UTAMA
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="lg:col-span-3 p-8 lg:p-12 flex flex-col justify-center">
+                                        <div className="mb-4">
+                                            <div className="flex items-center gap-2 text-sm text-desa-green-600 mb-3">
+                                                <span className="text-base">📅</span>
+                                                <span className="font-medium">
+                                                    {new Date(latestNews[0].date).toLocaleDateString('id-ID', {
+                                                        weekday: 'long',
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric'
+                                                    })}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6 group-hover:text-desa-green-600 transition-colors leading-tight">
+                                            {latestNews[0].title}
+                                        </h3>
+                                        <p className="text-gray-600 mb-8 leading-relaxed text-lg">
+                                            {latestNews[0].excerpt}
+                                        </p>
+                                        <div className="flex items-center gap-4">
+                                            <button
+                                                onClick={() => handleNewsClick(latestNews[0])}
+                                                className="bg-desa-green-600 text-white px-8 py-3 rounded-full hover:bg-desa-green-700 font-semibold transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl"
+                                            >
+                                                Baca Selengkapnya
+                                            </button>
+                                            <button
+                                                onClick={() => navigate('/berita')}
+                                                className="text-desa-green-600 hover:text-desa-green-700 font-medium flex items-center gap-2 hover:gap-3 transition-all duration-300"
+                                            >
+                                                Lihat Semua Berita
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    )}
+
+                    {/* Other News Grid */}
+                    {latestNews.length > 1 && (
+                        <div>
                             <div className="flex justify-between items-center mb-8">
-                                <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                                    🗞️ Berita Terkini
+                                <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                                    <span className="w-6 h-6 bg-desa-green-100 rounded-lg flex items-center justify-center">
+                                        <span className="text-desa-green-600 text-sm">📄</span>
+                                    </span>
+                                    Berita Lainnya
                                 </h3>
-                                <button
-                                    onClick={() => navigate('/berita')}
-                                    className="bg-desa-green-600 text-white px-6 py-2 rounded-full hover:bg-desa-green-700 transition-colors font-medium text-sm shadow-lg hover:shadow-xl"
-                                >
-                                    Lihat Semua Berita →
-                                </button>
                             </div>
 
-                            <div className="space-y-6">
-                                {latestNews.map((news, index) => (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {latestNews.slice(1).map((news) => (
                                     <article
                                         key={news.id}
-                                        className={`group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 ${index === 0 ? 'lg:grid lg:grid-cols-5 lg:gap-6' : ''
-                                            }`}
+                                        className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100 hover:-translate-y-1"
                                     >
-                                        {/* Featured News Layout (First News) */}
-                                        {index === 0 ? (
-                                            <>
-                                                <div className="lg:col-span-2 h-64 lg:h-auto overflow-hidden">
-                                                    <img
-                                                        src={news.image}
-                                                        alt={news.title}
-                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                                    />
-                                                </div>
-                                                <div className="lg:col-span-3 p-8 flex flex-col justify-center">
-                                                    <div className="inline-flex items-center gap-2 text-sm font-medium text-desa-green-600 mb-3">
-                                                        <span className="w-2 h-2 bg-desa-green-500 rounded-full animate-pulse"></span>
-                                                        BERITA UTAMA
-                                                    </div>
-                                                    <h3 className="text-xl lg:text-2xl font-bold text-gray-800 mb-4 group-hover:text-desa-green-600 transition-colors leading-tight">
-                                                        {news.title}
-                                                    </h3>
-                                                    <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3">
-                                                        {news.excerpt}
-                                                    </p>
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                                                            <span className="text-base">📅</span>
-                                                            {new Date(news.date).toLocaleDateString('id-ID', {
-                                                                year: 'numeric',
-                                                                month: 'long',
-                                                                day: 'numeric'
-                                                            })}
-                                                        </div>
-                                                        <button
-                                                            onClick={() => handleNewsClick(news)}
-                                                            className="text-desa-green-600 hover:text-desa-green-700 font-medium text-sm hover:bg-desa-green-50 px-3 py-1 rounded-full transition-colors"
-                                                        >
-                                                            Baca Selengkapnya →
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </>
-                                        ) : (
-                                            /* Regular News Layout */
-                                            <div className="md:flex">
-                                                <div className="md:w-48 h-32 md:h-auto overflow-hidden">
-                                                    <img
-                                                        src={news.image}
-                                                        alt={news.title}
-                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                                    />
-                                                </div>
-                                                <div className="p-6 flex-1 flex flex-col justify-between">
-                                                    <div>
-                                                        <h3
-                                                            className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-desa-green-600 transition-colors line-clamp-2 cursor-pointer"
-                                                            onClick={() => handleNewsClick(news)}
-                                                        >
-                                                            {news.title}
-                                                        </h3>
-                                                        <p className="text-gray-600 mb-4 line-clamp-2 text-sm">
-                                                            {news.excerpt}
-                                                        </p>
-                                                    </div>
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="text-sm text-gray-500 flex items-center gap-1">
-                                                            <span>📅</span>
-                                                            {new Date(news.date).toLocaleDateString('id-ID', {
-                                                                month: 'short',
-                                                                day: 'numeric',
-                                                                year: '2-digit'
-                                                            })}
-                                                        </div>
-                                                        <button
-                                                            onClick={() => handleNewsClick(news)}
-                                                            className="text-desa-green-600 hover:text-desa-green-700 text-sm font-medium hover:bg-desa-green-50 px-2 py-1 rounded transition-colors"
-                                                        >
-                                                            Baca →
-                                                        </button>
-                                                    </div>
+                                        <div className="relative h-48 overflow-hidden">
+                                            <img
+                                                src={news.image}
+                                                alt={news.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                        </div>
+                                        <div className="p-6">
+                                            <div className="flex items-center gap-2 text-xs text-desa-green-600 mb-3 font-medium">
+                                                <span className="w-1.5 h-1.5 bg-desa-green-500 rounded-full"></span>
+                                                {new Date(news.date).toLocaleDateString('id-ID', {
+                                                    day: 'numeric',
+                                                    month: 'short',
+                                                    year: 'numeric'
+                                                })}
+                                            </div>
+                                            <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-desa-green-600 transition-colors leading-snug cursor-pointer"
+                                                onClick={() => handleNewsClick(news)}>
+                                                {news.title}
+                                            </h3>
+                                            <p className="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                                                {news.excerpt}
+                                            </p>
+                                            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                                                <button
+                                                    onClick={() => handleNewsClick(news)}
+                                                    className="text-desa-green-600 hover:text-desa-green-700 font-medium text-sm flex items-center gap-2 hover:gap-3 transition-all duration-300"
+                                                >
+                                                    Baca Artikel
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                </button>
+                                                <div className="flex items-center gap-1 text-xs text-gray-400">
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <span>5 min baca</span>
                                                 </div>
                                             </div>
-                                        )}
+                                        </div>
                                     </article>
                                 ))}
                             </div>
 
-                            {/* Load More Button */}
-                            <div className="text-center mt-8">
-                                <button
-                                    onClick={() => navigate('/berita')}
-                                    className="bg-white text-desa-green-600 border-2 border-desa-green-600 px-8 py-3 rounded-full font-medium hover:bg-desa-green-600 hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl"
-                                >
-                                    Muat Berita Lainnya
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Pengumuman Sidebar */}
-                        <div>
-                            <div className="flex items-center gap-2 mb-8">
-                                <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                                    📢 Pengumuman
-                                </h3>
-                            </div>
-
-                            {/* Pengumuman Cards */}
-                            <div className="space-y-4">
-                                {announcements.map((announcement, index) => (
-                                    <div
-                                        key={announcement.id}
-                                        className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-desa-green-200 group"
-                                    >
-                                        <div className="flex items-start gap-4">
-                                            <div className="bg-desa-green-100 text-desa-green-600 p-3 rounded-xl font-bold text-sm min-w-fit flex flex-col items-center">
-                                                <span className="text-lg">
-                                                    {new Date(announcement.date).getDate()}
-                                                </span>
-                                                <span className="text-xs uppercase">
-                                                    {new Date(announcement.date).toLocaleDateString('id-ID', {
-                                                        month: 'short'
-                                                    })}
-                                                </span>
-                                            </div>
-                                            <div className="flex-1">
-                                                <h4 className="font-semibold text-gray-800 mb-2 group-hover:text-desa-green-600 transition-colors line-clamp-2">
-                                                    {announcement.title}
-                                                </h4>
-                                                <div className="flex items-center gap-2 text-xs text-gray-500">
-                                                    <span className="bg-gray-100 px-2 py-1 rounded-full">Pengumuman</span>
-                                                    <span>•</span>
-                                                    <span>Terbaru</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Quick Action Buttons */}
-                            <div className="mt-8 space-y-4">
-                                <a
-                                    href="/pengumuman"
-                                    className="block w-full bg-desa-green-600 text-white text-center py-3 rounded-xl font-medium hover:bg-desa-green-700 transition-colors shadow-lg hover:shadow-xl"
-                                >
-                                    Lihat Semua Pengumuman
-                                </a>
-                                <a
-                                    href="/kontak"
-                                    className="block w-full border-2 border-desa-green-600 text-desa-green-600 text-center py-3 rounded-xl font-medium hover:bg-desa-green-50 transition-colors"
-                                >
-                                    💬 Hubungi Kami
-                                </a>
-                            </div>
-
-                            {/* Info Box */}
-                            <div className="mt-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-6">
-                                <div className="flex items-center gap-3 mb-3">
-                                    <span className="text-2xl">ℹ️</span>
-                                    <h4 className="font-bold text-blue-800">Info Penting</h4>
+                            {/* Load More Section */}
+                            <div className="text-center mt-12 pt-8 border-t border-gray-200">
+                                <div className="mb-4">
+                                    <p className="text-gray-600 mb-6">
+                                        Ingin membaca berita dan artikel lainnya? Jelajahi koleksi lengkap berita desa kami
+                                    </p>
                                 </div>
-                                <p className="text-blue-700 text-sm leading-relaxed">
-                                    Untuk informasi layanan darurat atau pengaduan mendesak, hubungi kantor desa pada jam kerja atau melalui kontak darurat yang tersedia.
-                                </p>
+                                <div className="flex justify-center">
+                                    <button
+                                        onClick={() => navigate('/berita')}
+                                        className="bg-desa-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-desa-green-700 transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl"
+                                    >
+                                        Lihat Semua Berita
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </section>
 

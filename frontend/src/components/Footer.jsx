@@ -1,113 +1,82 @@
 import React from 'react';
-import { Icon, FaMapMarkerAlt, FaPhone, FaEnvelope } from './Icons';
 
 const Footer = () => {
     return (
-        <footer className="bg-gradient-to-r from-desa-green-700 to-desa-green-600 text-white mt-auto">
-            <div className="max-w-6xl mx-auto px-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-12">
+        <footer className="bg-desa-green-800 text-white mt-auto">
+            <div className="max-w-6xl mx-auto px-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-10">
                     {/* Info Kontak */}
                     <div>
-                        <h3 className="text-desa-green-100 text-lg font-semibold mb-4">Kontak Kami</h3>
-                        <div className="space-y-3">
-                            <p className="flex items-center text-desa-green-50">
-                                <Icon icon={FaMapMarkerAlt} size="md" className="mr-3 text-desa-green-100" />
-                                Jl. Raya Desa Tanjung Rambutan
-                            </p>
-                            <p className="flex items-center text-desa-green-50">
-                                <Icon icon={FaPhone} size="md" className="mr-3 text-desa-green-100" />
-                                (0761) 123456
-                            </p>
-                            <p className="flex items-center text-desa-green-50">
-                                <Icon icon={FaEnvelope} size="md" className="mr-3 text-desa-green-100" />
-                                admin@tanjungrambutan-desa.id
-                            </p>
+                        <h3 className="text-white text-xl font-bold mb-6">Kontak Kami</h3>
+                        <div className="space-y-4">
+                            <div className="flex items-start">
+                                <div className="w-4 h-4 mt-1 mr-3 text-desa-green-200">📍</div>
+                                <p className="text-gray-200 leading-relaxed">
+                                    Jln Kemuning Desa Tanjung Rambutan<br />
+                                    Kecamatan Kampar Kiri<br />
+                                    Kabupaten Kampar, Provinsi Riau<br />
+                                    Kode Pos 28461
+                                </p>
+                            </div>
+                            <div className="space-y-2">
+                                <div className="flex items-center">
+                                    <div className="w-4 h-4 mr-3 text-desa-green-200">📞</div>
+                                    <div className="text-gray-200">
+                                        <a href="tel:+6285267556489" className="hover:text-white transition-colors">
+                                            085267556489 <span className="text-xs text-gray-400">(Kepala Desa)</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="flex items-center ml-7">
+                                    <div className="text-gray-200">
+                                        <a href="tel:+6285355740112" className="hover:text-white transition-colors">
+                                            085355740112 <span className="text-xs text-gray-400">(Sekretaris)</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex items-center">
+                                <div className="w-4 h-4 mr-3 text-desa-green-200">✉️</div>
+                                <p className="text-gray-200">admin@tanjungrambutan-desa.id</p>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Quick Links */}
+                    {/* Media Sosial & Info */}
                     <div>
-                        <h3 className="text-desa-green-100 text-lg font-semibold mb-4">Tautan Cepat</h3>
-                        <ul className="space-y-2">
-                            <li>
-                                <a href="/profil" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Profil Desa
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/pemerintahan" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Pemerintahan
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/galeri" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Galeri
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/berita" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Berita
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Media & Galeri */}
-                    <div>
-                        <h3 className="text-desa-green-100 text-lg font-semibold mb-4">Media & Galeri</h3>
-                        <ul className="space-y-2">
-                            <li>
-                                <a href="/galeri" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Galeri Foto
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/berita" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Berita Desa
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/profil-desa" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Buku Profil Desa
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/pemerintahan/struktur" className="text-desa-green-50 hover:text-desa-green-100 hover:pl-2 transition-all duration-300 block py-1">
-                                    Struktur Organisasi
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Social Media & Stats */}
-                    <div>
-                        <h3 className="text-desa-green-100 text-lg font-semibold mb-4">Media Sosial</h3>
-                        <div className="flex flex-wrap gap-2 mb-6">
-                            <a href="#" className="bg-white/10 hover:bg-blue-600 px-3 py-2 rounded-full text-white text-sm font-medium transition-all duration-300 hover:-translate-y-1">
-                                Facebook
+                        <h3 className="text-white text-xl font-bold mb-6">Ikuti Kami</h3>
+                        
+                        {/* Social Media */}
+                        <div className="flex flex-wrap gap-3 mb-8">
+                            <a href="#" className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white text-sm font-medium transition-colors duration-300 flex items-center">
+                                📘 Facebook
                             </a>
-                            <a href="#" className="bg-white/10 hover:bg-pink-500 px-3 py-2 rounded-full text-white text-sm font-medium transition-all duration-300 hover:-translate-y-1">
-                                Instagram
+                            <a href="#" className="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded-lg text-white text-sm font-medium transition-colors duration-300 flex items-center">
+                                📷 Instagram
                             </a>
-                            <a href="#" className="bg-white/10 hover:bg-green-500 px-3 py-2 rounded-full text-white text-sm font-medium transition-all duration-300 hover:-translate-y-1">
-                                WhatsApp
+                            <a href="https://wa.me/6285267556489" target="_blank" rel="noopener noreferrer" className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-white text-sm font-medium transition-colors duration-300 flex items-center">
+                                📱 WA Kepala Desa
+                            </a>
+                            <a href="https://wa.me/6285355740112" target="_blank" rel="noopener noreferrer" className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white text-sm font-medium transition-colors duration-300 flex items-center">
+                                📱 WA Sekretaris
                             </a>
                         </div>
 
-                        <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                            <h4 className="text-desa-green-100 text-sm font-semibold mb-3">Statistik Pengunjung</h4>
-                            <div className="space-y-2 text-sm">
-                                <div className="flex justify-between">
-                                    <span className="text-desa-green-50">Hari ini:</span>
-                                    <span className="text-desa-green-100 font-semibold">127</span>
+                        {/* Statistik Simple */}
+                        <div className="bg-desa-green-700 p-5 rounded-lg">
+                            <h4 className="text-white font-semibold mb-4">Pengunjung Website</h4>
+                            <div className="grid grid-cols-3 gap-4 text-center">
+                                <div>
+                                    <div className="text-white text-lg font-bold">127</div>
+                                    <div className="text-gray-300 text-xs">Hari Ini</div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span className="text-desa-green-50">Bulan ini:</span>
-                                    <span className="text-desa-green-100 font-semibold">3.450</span>
+                                <div>
+                                    <div className="text-white text-lg font-bold">3.5K</div>
+                                    <div className="text-gray-300 text-xs">Bulan Ini</div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span className="text-desa-green-50">Total:</span>
-                                    <span className="text-desa-green-100 font-semibold">45.678</span>
+                                <div>
+                                    <div className="text-white text-lg font-bold">45K</div>
+                                    <div className="text-gray-300 text-xs">Total</div>
                                 </div>
                             </div>
                         </div>
@@ -115,12 +84,10 @@ const Footer = () => {
                 </div>
 
                 {/* Copyright */}
-                <div className="border-t border-white/10 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div className="text-center md:text-left">
-                        <p className="text-desa-green-100 text-sm">
-                            &copy; 2024 Desa Tanjung Rambutan. Semua hak cipta dilindungi.
-                        </p>
-                    </div>
+                <div className="border-t border-desa-green-700 py-4 text-center">
+                    <p className="text-gray-300 text-sm">
+                        © 2024 Desa Tanjung Rambutan - Semua hak cipta dilindungi undang-undang
+                    </p>
                 </div>
             </div>
         </footer>
