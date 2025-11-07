@@ -36,7 +36,7 @@ const Header = () => {
                                 Desa Tanjung Rambutan
                             </h1>
                             <p className="text-xs md:text-sm opacity-90 text-green-100">
-                                Kecamatan Kampar Kiri, Kabupaten Kampar
+                                Kecamatan Kampar, Kabupaten Kampar
                             </p>
                         </div>
                     </div>
